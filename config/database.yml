@@ -16,8 +16,9 @@ default: &default
   username: root
   password: password
   host: localhost
-  port: 3366
+  #port: 3366
   #port: 3606
+  port: 3306
 
 
 development:
