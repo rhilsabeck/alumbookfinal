@@ -1,3 +1,17 @@
+<nav class="top-bar" data-topbar>
+  <nav class="test">
+      <ul class="title-area">
+          <li class="name">
+            <%= link_to '/' do %>
+              <span class="title">North Central College</span>
+              <span class="subtitle">Office of Graduate and Continuing Education</span>
+            <% end %>
+          </li>
+          <li class="toggle-topbar menu-icon">
+              <a href="#">Menu</a>
+          </li>
+      </ul>
+
 <section class="top-bar-section">
   <!-- Right Nav Section -->
   <ul class="right">
@@ -31,5 +45,14 @@
     <li>
       <%= link_to 'Search Admin', controller: '/searchadmins', :class => 'navbar-link' %>
     </li>
+        <li class="has-dropdown">
+      <a href="#">About</a>
+        <ul class="dropdown">
+           <li><%= link_to "Privacy Policy", privacy_path %></li>
+           <li><%= link_to "Contact Us", contact_path %></li>
+        </ul>
+    </li>
   </ul>
 </section>
+</nav>
+</nav>

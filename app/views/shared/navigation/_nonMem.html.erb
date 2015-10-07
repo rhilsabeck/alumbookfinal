@@ -1,8 +1,30 @@
-<section class="top-bar-section">
-  <!-- Right Nav Section -->
-  <ul class="right">
-    <li class="<%= 'active' if params[:controller] == 'devise/sessions' %>">
-      <%= link_to "Login", new_login_session_path %>
-    </li>
-  </ul>
-</section>
+<nav class="top-bar" data-topbar>
+  <nav class="test">
+      <ul class="title-area">
+          <li class="name">
+            <%= link_to '/' do %>
+              <span class="title">North Central College</span>
+              <span class="subtitle">Office of Graduate and Continuing Education</span>
+            <% end %>
+          </li>
+          <li class="toggle-topbar menu-icon">
+              <a href="#">Menu</a>
+          </li>
+      </ul>
+      <section class="top-bar-section">
+          <ul class="right">
+              <!-- Andrew Bockus -->
+            <li class="<%= 'active' if params[:controller] == 'devise/sessions' %>">
+            <%= link_to "Login", new_login_session_path %>
+            </li>
+              <li class="has-dropdown">
+                <a href="#">About</a>
+                <ul class="dropdown">
+                <li><%= link_to "Privacy Policy", privacy_path %></li>
+                <li><%= link_to "Contact Us", contact_path %></li>
+                </ul>
+              </li>
+          </ul>
+      </section>
+    </nav>
+</nav>

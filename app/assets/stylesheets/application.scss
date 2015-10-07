@@ -36,6 +36,12 @@ body {
   @if $font-smoothing == antialiased {
     -moz-osx-font-smoothing: grayscale;
   }
+
+  //background-image: url("/assets/ncc.jpg");
+  //background-size: 100% auto;
+  //background-repeat: no-repeat;
+  //background-size: cover;
+  //background-attachment: fixed;
 }
 
 a {

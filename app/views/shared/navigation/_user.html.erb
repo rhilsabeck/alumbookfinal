@@ -1,3 +1,16 @@
+<nav class="top-bar" data-topbar>
+  <nav class="test">
+      <ul class="title-area">
+          <li class="name">
+            <%= link_to '/' do %>
+              <span class="title">North Central College</span>
+              <span class="subtitle">Office of Graduate and Continuing Education</span>
+            <% end %>
+          </li>
+          <li class="toggle-topbar menu-icon">
+              <a href="#">Menu</a>
+          </li>
+      </ul>
 <section class="top-bar-section">
   <!-- Right Nav Section -->
   <ul class="right">
@@ -5,7 +18,7 @@
       <%= link_to 'Surveys', surveys_path %>
     </li>
     <li class="<%= 'active' if params[:controller] == 'internships' %>">
-      <%= link_to 'Internships', internships_path %>
+      <%= link_to 'Job & Internship Openings', internships_path %>
     </li>
     <li class="has-dropdown <%= 'active' if params[:controller] == 'giving_backs' %>">
       <a href="#">Give Back</a>
@@ -34,5 +47,14 @@
     <li>
       <%= link_to 'Search User', controller: 'searchusers', :class => 'navbar-link' %>
     </li>
+    <li class="has-dropdown">
+      <a href="#">About</a>
+        <ul class="dropdown">
+           <li><%= link_to "Privacy Policy", privacy_path %></li>
+           <li><%= link_to "Contact Us", contact_path %></li>
+        </ul>
+    </li>
   </ul>
 </section>
+</nav>
+</nav>

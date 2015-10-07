@@ -15,9 +15,10 @@
         <div class="action">
           <%= f.submit 'Log in', :class => 'button expand', :type => 'submit' %>
         </div>
-        <%= render "devise/shared/links" %>
+        <div class="right"><%= link_to "Forgot your password?", contact_path %><br /></div>
       <% end %>
     </div>
   </div>
 </div>
-<span class="photo-credit">photo &copy; Victor Bashorun</span>
+
+<% #<span class="photo-credit">photo &copy; Victor Bashorun</span> %>
