@@ -9,7 +9,12 @@
         <% f.hidden_field :created_at, value: DateTime.now %>
         <% f.hidden_field :updated_at, value: DateTime.now %>
         <%= f.hidden_field :last_sign_in_at, value: DateTime.now %>
+        <% if current_login.admin? %>
         <%= render 'form', f: f, include_type: true %>
+        <% else %>
+        <%= f.hidden_field :type, value: :user %>
+        <%= render 'form', f: f, include_type: false %>
+        <% end %>
         <%= f.submit 'Create account', class: 'small success button' %>
       <% end %>
     </div>

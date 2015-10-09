@@ -48,6 +48,16 @@ class Login < ActiveRecord::Base
     (admin? && !login.admin?) || self.id == id || (worker? && login.user?)
   end
 
+    def authorized_to_delete_account?(id)
+    login = Login.find(id)
+    (admin? && !login.admin?) || self.id == id || (worker? && login.user?)
+  end
+
+    def authorized_to_add_all_account_types?(id)
+          login = Login.find(id)
+          (admin? && !login.admin?) || self.id == id || (worker? && login.user?)   
+    end
+
   def full_name
     "#{first_name}#{' ' + middle_initial.upcase + '.' if middle_initial} #{last_name}"
   end
