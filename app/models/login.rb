@@ -47,7 +47,7 @@ class Login < ActiveRecord::Base
     login = Login.find(id)
     (admin? && !login.admin?) || self.id == id || (worker? && login.user?)
   end
-
+#Ryan Hilsabeck added this method
     def authorized_to_delete_account?(id)
     login = Login.find(id)
     (admin? && !login.admin?) || self.id == id || (worker? && login.user?)

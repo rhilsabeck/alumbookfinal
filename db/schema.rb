@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609021310) do
+ActiveRecord::Schema.define(version: 20151011194052) do
 
   create_table "colleges", force: :cascade do |t|
     t.string   "college_name", limit: 255
@@ -190,15 +190,15 @@ ActiveRecord::Schema.define(version: 20150609021310) do
   add_index "undergraduate_degrees", ["user_id"], name: "index_undergraduate_degrees_on_user_id", using: :btree
 
   create_table "user_phones", force: :cascade do |t|
-    t.integer  "country_code", limit: 4
-    t.integer  "area_code",    limit: 4
-    t.integer  "prefix",       limit: 4
-    t.integer  "suffix",       limit: 4
-    t.integer  "extension",    limit: 4
+    t.string   "country_code", limit: 255
+    t.string   "area_code",    limit: 255
+    t.string   "prefix",       limit: 255
+    t.string   "suffix",       limit: 255
+    t.string   "extension",    limit: 255
     t.integer  "type",         limit: 4
     t.integer  "user_id",      limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "user_phones", ["user_id"], name: "index_user_phones_on_user_id", using: :btree
@@ -236,21 +236,18 @@ ActiveRecord::Schema.define(version: 20150609021310) do
     t.string   "street",                limit: 255
     t.string   "city",                  limit: 255
     t.integer  "state",                 limit: 4
-    t.integer  "zip",                   limit: 4
+    t.string   "zip",                   limit: 255
     t.string   "spouse_first_name",     limit: 255
     t.string   "spouse_middle_initial", limit: 255
     t.string   "spouse_last_name",      limit: 255
     t.integer  "number_children",       limit: 4
-    t.integer  "birth_month",           limit: 4
-    t.integer  "birth_day",             limit: 4
-    t.integer  "birth_year",            limit: 4
     t.string   "ethnicity",             limit: 255
-    t.boolean  "general_opt_in",        limit: 1
-    t.boolean  "email_opt_in",          limit: 1
-    t.boolean  "phone_opt_in",          limit: 1
-    t.boolean  "badges_opt_in",         limit: 1
+    t.integer  "general_opt_in",        limit: 4
+    t.integer  "email_opt_in",          limit: 4
+    t.integer  "phone_opt_in",          limit: 4
+    t.integer  "badges_opt_in",         limit: 4
     t.integer  "status",                limit: 4
-    t.string   "salary_range",          limit: 255
+    t.integer  "salary_range",          limit: 4
     t.string   "job_title",             limit: 255
     t.date     "start_date"
     t.date     "end_date"
@@ -262,6 +259,8 @@ ActiveRecord::Schema.define(version: 20150609021310) do
     t.string   "avatar_content_type",   limit: 255
     t.integer  "avatar_file_size",      limit: 4
     t.datetime "avatar_updated_at"
+    t.date     "birth_day"
+    t.string   "program",               limit: 255
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree

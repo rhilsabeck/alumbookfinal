@@ -1,3 +1,4 @@
+<% # Changes made by Ryan Hilsabeck to move some alumbook2 functionality to alumbook1 %>
 <% # Created by Tim Schneider, edited by Maxwell Barvian  %>
 <%= form_for @user, multipart: true do |f|  %>
 <div class="row">
@@ -53,41 +54,29 @@
     <div class="panel">
       <div class="clearfix">
         <%= submit_tag 'Save', class: 'small success right button' %>
-        <ul class="tabs" data-tab data-options="deep_linking: true; scroll_to_content: false;" role="tablist">
-          <li class="tab-title active" role="presentational" ><a href="#information" role="tab" tabindex="0" aria-selected="false" controls="information">Information</a></li>
-          <li class="tab-title" role="presentational"><a href="#education" role="tab" tabindex="0" aria-selected="false" controls="education">Education</a></li>
-          <li class="tab-title" role="presentational"><a href="#career" role="tab" tabindex="0" aria-selected="false" controls="career">Career</a></li>
-        </ul>
+        <% # Changes made by Ryan Hilsabeck to move some alumbook2 tab names below %>
+          <dl class="tabs" data-tab>
+            <dd class="active">
+              <a href="#pnlContactInfo">Contact</a>
+            </dd>
+            <dd>
+              <a href="#pnlEducationInfo">Education</a>
+            </dd>
+            <dd>
+              <a href="#pnlEmploymentInfo">Employment</a>
+            </dd>
+            <dd>
+              <a href="#pnlPersonalInfo">Personal</a>
+            </dd>
+            <dd>
+              <a href="#pnlPrivacyInfo">Privacy</a>
+            </dd>
+          </dl>
       </div>
       <div class="tabs-content">
-        <!-- Information Section  -->
-        <section role="tabpanel active" aria-hidden="true" class="content" id="information">
-          <div class="row">
-            <div class="medium-6 columns">
-              <div class="row">
-                <div class="medium-4 columns">
-                  <%= f.label :birth_day %>
-                  <%= f.text_field :birth_day %>
-                </div>
-                <div class="medium-4 columns">
-                  <%= f.label :birth_month %>
-                  <%= f.text_field :birth_month %>
-                </div>
-                <div class="medium-4 columns">
-                  <%= f.label :birth_year %>
-                  <%= f.text_field :birth_year %>
-                </div>
-              </div>
-            </div>
-            <div class="medium-3 columns">
-              <%= f.label :status %>
-              <%= f.select :status, User.statuses.map { |w,| [w.humanize, w] } %>
-            </div>
-            <div class="medium-3 columns">
-              <%= f.label :ethnicity %>
-              <%= f.text_field :ethnicity %>
-            </div>
-          </div>
+        <% # Changes made by Ryan Hilsabeck to move some alumbook2 to correct fields to edit in this tab %>
+        <!-- Contact Section  -->
+        <section role="tabpanel" aria-hidden="false" class="content active" id="pnlContactInfo">
 
           <fieldset>
             <legend>Address</legend>
@@ -111,32 +100,6 @@
           </fieldset>
 
           <fieldset>
-            <legend>Marital Status</legend>
-            <div class="row">
-              <div class="medium-10 columns">
-                <div class="row">
-                  <div class="medium-5 columns">
-                    <%= f.label :spouse_first_name %>
-                    <%= f.text_field :spouse_first_name %>
-                  </div>
-                  <div class="medium-2 columns">
-                    <%= f.label :spouse_middle_initial, 'MI' %>
-                    <%= f.text_field :spouse_middle_initial %>
-                  </div>
-                  <div class="medium-5 columns">
-                    <%= f.label :spouse_last_name %>
-                    <%= f.text_field :spouse_last_name %>
-                  </div>
-                </div>
-              </div>
-              <div class="medium-2 columns">
-                <%= f.label :number_of_children, '# children' %>
-                <%= f.text_field :number_children %>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
             <legend>Phones</legend>
             <div id="user_phones">
               <% @user.user_phones.build if @user.user_phones.empty? %>
@@ -149,7 +112,30 @@
         </section>
 
         <!-- Education Section  -->
-        <section role="tabpanel" aria-hidden="true" class="content" id="education">
+        <!-- Ryan Hilsabeck added program section below and added status to this tab section  -->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlEducationInfo">
+          <fieldset>
+          <legend>NCC School Information</legend>
+          <div class="row">
+            <div class="medium-6 columns">
+              <div class="medium-6 columns">
+              <div class="row">
+              <%= f.label :status %>
+              <%= f.select :status, User.statuses.map { |w,| [w.humanize, w] } %>
+              </div>
+            </div>
+            </div>
+            <div class="medium-6 columns">
+              <div class="row">
+              <div class="medium-11 columns">
+              <%= f.label :program %>
+              <%= f.select :program, options_for_select([['Business Administration', 'Business Administration'],["International Business Administration",'International Business Administration'],["Education",'Education'],["Leadership Studies",'Leadership Studies'],["Liberal Studies",'Liberal studies'],["Management Information Systems",'Management Information Systems'],["Web and Internet application",'Web and Internet application']]) %>
+              </div>
+            </div>
+            </div>
+          </div>
+        </fieldset>
+
           <fieldset>
             <legend>Undergraduate Degrees</legend>
             <div class="block-list">
@@ -162,22 +148,24 @@
               </div>
             </div>
           </fieldset>
+          <!-- Ryan Hilsabeck fixed the below so the grad degree block only shows up when you had a grad degree -->
           <fieldset>
             <legend>Graduate Degrees</legend>
             <div class="block-list">
-              <div id="undergraduate_degrees">
-                <% @user.graduate_degrees.build if @user.graduate_degrees.empty? %>
+              <div id="graduate_degrees">
+                <% @user.graduate_degrees.build if @user.graduate_degrees.present? %>
                 <%= f.fields_for :graduate_degrees do |f_grad_degree| %>
                   <%= render 'graduate_degree_fields', f: f_grad_degree %>
                   <%= link_to_add_association 'add degree', f, :graduate_degrees %>
                 <% end %>
+                <%= link_to_add_association 'add degree', f, :graduate_degrees %>
               </div>
             </div>
           </fieldset>
         </section>
 
-        <!--  Career Section -->
-        <section role="tabpanel" aria-hidden="true" class="content" id="career">
+        <!--  Employment Section -->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlEmploymentInfo">
           <div class="row">
             <div class="medium-6 columns">
               <%= f.label :job_title %>
@@ -241,6 +229,102 @@
               <% end %>
             <% end %>
           </fieldset>
+        </section>
+
+        <!--  Employment Section -->
+        <!--  Ryan Hilsabeck added this info below-->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPersonalInfo">
+          <fieldset>
+            <legend>Personal Information</legend>
+          <div class="row">
+            <div class="medium-6 columns">
+              <div class="row">
+                <div class="medium-6 columns">
+                  <%= f.label :birth_day %>
+                  <%= f.text_field :birth_day %>
+                </div>
+              </div>
+            </div>
+            <div class="medium-6 columns">
+            <div class="medium-6 columns">
+              <%= f.label :ethnicity %>
+              <%= f.text_field :ethnicity %>
+            </div>
+          </div>
+          </div>
+        </fieldset>
+
+          <fieldset>
+            <legend>Marital Status</legend>
+            <div class="row">
+              <div class="medium-10 columns">
+                <div class="row">
+                  <div class="medium-5 columns">
+                    <%= f.label :spouse_first_name %>
+                    <%= f.text_field :spouse_first_name %>
+                  </div>
+                  <div class="medium-2 columns">
+                    <%= f.label :spouse_middle_initial, 'MI' %>
+                    <%= f.text_field :spouse_middle_initial %>
+                  </div>
+                  <div class="medium-5 columns">
+                    <%= f.label :spouse_last_name %>
+                    <%= f.text_field :spouse_last_name %>
+                  </div>
+                </div>
+              </div>
+              <div class="medium-2 columns">
+                <%= f.label :number_of_children, '# children' %>
+                <%= f.text_field :number_children %>
+              </div>
+            </div>
+          </fieldset>
+        </section>
+       <!--  Privacy Section -->
+        <!--  Ryan Hilsabeck added this info below-->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPrivacyInfo">
+                <fieldset>
+                  <legend>Opt In?</legend>
+                  <div class="row">
+                  <div class="medium-10 columns">
+                    <%= hidden_field_tag :general_opt_in, false %>
+                    <%= check_box_tag 'general_opt_in', 1, (@user.general_opt_in.present? ?
+                                  convert_opt_in_to_true_false(@user.general_opt_in) : 0),
+                                  :title => "Allow your name to be searched by other users" %>
+                    <label for="general_opt_in">General opt in</label>
+                  </div>
+                  </div>
+
+                  <div class="row">
+                  <div class="medium-10 columns">
+                    <%= hidden_field_tag :email_opt_in, false %>
+                    <%= check_box_tag 'email_opt_in', 1, (convert_opt_in_to_true_false(
+                                                            @user.email_opt_in.present? ?
+                                                            @user.email_opt_in : 0)),
+                                                            :title => "Allow your email address to be visible by other users" %>
+                    <label for="email_opt_in">eMail opt in</label>
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="medium-10 columns">
+                    <%= hidden_field_tag :phone_opt_in, false %>
+                    <%= check_box_tag 'phone_opt_in', 1,(convert_opt_in_to_true_false(
+                                                            @user.present? ?
+                                                            @user.phone_opt_in : 0)),
+                                                            :title => "Allow your phone number to be visible by other users" %>
+                    <label for="phone_opt_in">Phone opt in</label>
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="medium-10 columns">
+                    <%= hidden_field_tag :badges_opt_in, false %>
+                    <%= check_box_tag 'badges_opt_in', 1,(convert_opt_in_to_true_false(
+                                                            @user.present? ?
+                                                            @user.badges_opt_in : 0)) %>
+                    <label for="badges_opt_in">Badge opt in</label>
+                  </div>
+                  </div>
+                </fieldset>
         </section>
       </div>
     </div>

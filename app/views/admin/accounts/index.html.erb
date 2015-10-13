@@ -36,6 +36,7 @@
                     <% end %>
                   </li>
                 <% end %>
+                <% # Ryan Hilsabeck added below so worker can't delete admin or other workers %>
                 <% if current_login.authorized_to_delete_account?(a.id) %>
                 <li>
                   <%= link_to admin_account_path(a), method: :delete, title: 'Delete', data: { confirm: "Are you sure you want to delete this account?" }, class: 'small alert icon button' do %>

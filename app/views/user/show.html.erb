@@ -6,7 +6,6 @@
         <%= image_tag @user.avatar.url(:full) %>
       </div>
       <h4><%= @user.login.full_name %></h4>
-      <%= mail_to @user.login.try(:email) %>
       <% if current_login.admin? || current_login.worker? %>
         <hr />
         <h6>Last Updated: </h6><%= @user.login.updated_at.to_s(:date_format)%>
@@ -15,44 +14,135 @@
       <% end %>
     </div>
   </div>
-
+  
+  <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
   <div class="large-9 columns">
     <div class="panel">
       <div class="clearfix">
-        <ul class="left tabs" data-tab role="tablist">
-          <li class="tab-title active" role="presentational"><a href="#information" role="tab" tabindex="0" aria-selected="true" controls="information">Information</a></li>
-          <li class="tab-title" role="presentational"><a href="#career" role="tab" tabindex="0"aria-selected="false" controls="career">Career</a></li>
-          <li class="tab-title" role="presentational"><a href="#survey" role="tab" tabindex="0" aria-selected="false" controls="survey">Survey</a></li>
-        </ul>
         <% if current_login.authorized_to_edit_profile? @user.id %>
           <%= link_to 'Edit', edit_user_path(@user), class: 'small right button' %>
         <% elsif current_login.authorized_to_edit_account? @user.login.id %>
           <%= link_to 'Edit Account', edit_admin_account_path(@user.login), class: 'small right button' %>
         <% end %>
+          <dl class="tabs" data-tab>
+            <dd class="active">
+              <a href="#pnlContactInfo">Contact</a>
+            </dd>
+            <dd>
+              <a href="#pnlEducationInfo">Education</a>
+            </dd>
+            <dd>
+              <a href="#pnlEmploymentInfo">Employment</a>
+            </dd>
+            <dd>
+              <a href="#pnlPersonalInfo">Personal</a>
+            </dd>
+            <dd>
+              <a href="#pnlPrivacyInfo">Privacy</a>
+            </dd>
+          </dl>
       </div>
       <div class="tabs-content">
-        <section role="tabpanel" aria-hidden="false" class="content active" id="information">
-          <p>
-          <h3> Alumni of North Central College </h3>
-          <%= @user.login.try(:email) %> <br>
-          <h4>Degrees</h4> <br>
-          <br>
-          Degree Earned <br>
-          Institution <br>
-          Year <br>
-          </p>
+        <section role="tabpanel" aria-hidden="false"class="content active" id="pnlContactInfo">
+                <p><b>Address:</b><br>
+                    <%= @user.try(:street) %><br>
+                    <%= @user.try(:city) %> ,
+                    <%= @user.try(:state) %>
+                    <%= @user.try(:zip) %><br>
+                </p>
+                <p><b>E-Mail:</b><br> <%= mail_to @user.login.try(:email) %></p>
+                <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
+                <p><b>Phone Numbers:</b><br>
+                  <ul id="user_phones">
+                    <% if @user.user_phones.all.present? %>
+                      <% @user.user_phones.all.each do |c| %>
+                        <li>
+                          <%= c.type + ": " +
+                              concatenate_phone(c.country_code,
+                                                c.area_code,
+                                                c.prefix,
+                                                c.suffix)%>
+                        </li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </p>
         </section>
-
-        <section role="tabpanel" aria-hidden="true" class="content" id="career">
-          <p>
-          <h4>Employer info</h4>
-          <strong>Company: </strong><%= @user.try(:company).try(:company_name)%><br>
-          <strong>City, State: </strong><%= @user.try(:company).try(:company_info).try(:city)%><%= @user.try(:company).try(:company_info).try(:state)%> <br>
-          </p>
+    <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlEducationInfo">
+                <p><b>NCC Education Status:</b> <%= convert_user_status_to_words(@user.try(:status)) %></p>
+                <p><b>NCC Grad Program:</b> <%= @user.try(:program) %></p>
+                <p><b><ins>Degrees</ins></b>
+                  <ul id="degrees">
+                    <% if @user.undergraduate_degrees.all.present? %>
+                      <% @user.undergraduate_degrees.all.each do |ud| %>
+                      <li>
+                        <%= convert_degree_type(ud.degree.type) %>
+                            <%= ud.degree.major_name %> from
+                            <%= ud.college.college_name %> on
+                            <%= ud.graduation_date %>
+                      </li>
+                      <% end %>
+                    <% end %>
+                    <% if @user.graduate_degrees.present? %>
+                      <% @user.graduate_degrees.all.each do |gd| %>
+                      <li>
+                        <%= convert_degree_type(gd.degree.type) %>
+                            <%= gd.degree.major_name %> from
+                            <%= gd.college.college_name %> on
+                            <%= gd.graduation_date %>
+                      </li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </p>
         </section>
+        <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlEmploymentInfo">
+                <% if @user.company.present? %>
+                <p>
+                  <b>Company Name:</b><br> 
+                  <%= @user.try(:company).try(:company_name) %><br><br>
+                  <b>Job Title:</b> <br>
+                  <%= @user.try(:job_title) %>
+                </p>
+                <p><b>Address:</b><br>
+                    <%= @user.company.company_info.street %><br>
+                    <%= @user.company.company_info.city %>,
+                    <%= @user.company.company_info.state %>
+                    <%= @user.company.company_info.zip  %>
+                </p>
 
-        <section role="tabpanel" aria-hidden="true" class="content" id="survey">
-          <h2>Surveys</h2>
+                <p><b>Phone Number</b><br>
+                  <%= concatenate_phone(@user.company.company_info.country_code,
+                                         @user.company.company_info.area_code,
+                                         @user.company.company_info.prefix,
+                                         @user.company.company_info.suffix) %>
+                </p>
+                <% end %>
+                <p><b>Salary Range:</b> <%= @user.present? ? convert_salary_range_to_words(@user.salary_range) : "" %></p>
+                <p><b>Start Date:</b> <%= @user.present? ? @user.start_date : "" %><br>
+                </p>
+        </section>
+        <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPersonalInfo">
+                <p><b>Birth Date:</b> <%= @user.try(:birth_day) %></p>
+                <p><b>Ethnicity:</b> <%= @user.try(:ethnicity) %></p>
+                <p><b>Spouse Name:</b> <%= @user.try(:spouse_first_name) %>
+                               <%= @user.try(:spouse_middle_initial) %>
+                               <%= @user.try(:spouse_last_name) %>
+                </p>
+                <p><b>Number of children:</b> <%= @user.try(:number_children) %></p>
+        </section>
+        <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPrivacyInfo">
+                <fieldset>
+                  <legend>Opt In?</legend>
+                    <p><b>General:</b> <%= convert_opt_in_to_words(@user.general_opt_in.present? ? @user.general_opt_in : 0) %></p>
+                    <p><b>Email:</b> <%= convert_opt_in_to_words(@user.email_opt_in.present? ? @user.email_opt_in : 0) %></p>
+                    <p><b>Phone:</b> <%= convert_opt_in_to_words(@user.phone_opt_in.present? ? @user.phone_opt_in : 0) %></p>
+                    <p><b>Badges:</b> <%= convert_opt_in_to_words(@user.phone_opt_in.present? ? @user.badges_opt_in : 0) %></p>
+                </fieldset>
         </section>
       </div>
     </div>

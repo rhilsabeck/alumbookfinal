@@ -69,9 +69,9 @@ class UserController < AuthenticatedController
     # Lord give me strength
     params.require(:user).permit(
       :avatar, :street, :city, :state, :zip, :spouse_first_name, :spouse_middle_initial,
-      :spouse_last_name, :number_children, :birth_day, :birth_month, :birth_year, :ethnicity,
+      :spouse_last_name, :number_children, :birth_day, :ethnicity,
       :general_opt_in, :email_opt_in, :phone_opt_in, :searchable,
-      :status, :salary_range, :job_title, :start_date, :end_date,
+      :status, :salary_range, :job_title, :start_date, :end_date, :program,
       login_attributes: [
         :id, :first_name, :middle_initial, :last_name,
         :username, :email, :password, :password_confirmation
@@ -90,4 +90,6 @@ class UserController < AuthenticatedController
       ]
     )
   end
+
+
 end

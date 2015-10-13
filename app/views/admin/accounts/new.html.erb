@@ -6,6 +6,7 @@
     <div class="panel">
       <%= form_for @login, url: admin_accounts_path do |f| %>
         <!--Hidden fields required for Devise helper to add the record-->
+        <!--Ryan Hilsabeck added another hidden field if current login is a work so they can only add users-->
         <% f.hidden_field :created_at, value: DateTime.now %>
         <% f.hidden_field :updated_at, value: DateTime.now %>
         <%= f.hidden_field :last_sign_in_at, value: DateTime.now %>
