@@ -14,8 +14,8 @@
       <% end %>
     </div>
   </div>
-  
-  <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
+
+   <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
   <div class="large-9 columns">
     <div class="panel">
       <div class="clearfix">
@@ -50,20 +50,25 @@
                     <%= @user.try(:state) %>
                     <%= @user.try(:zip) %><br>
                 </p>
-                <p><b>E-Mail:</b><br> <%= mail_to @user.login.try(:email) %></p>
+                <p><b>E-Mail:</b><br> 
+                 <% if @user.email_opt_in == 1 %>
+                      <%= mail_to @user.login.try(:email) %></p>
+                  <% end %>
                 <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
                 <p><b>Phone Numbers:</b><br>
                   <ul id="user_phones">
+                    <% if @user.phone_opt_in == 1 %>
                     <% if @user.user_phones.all.present? %>
                       <% @user.user_phones.all.each do |c| %>
                         <li>
-                          <%= c.type + ": " +
+                          <%= c.type.to_s + ": " +
                               concatenate_phone(c.country_code,
                                                 c.area_code,
                                                 c.prefix,
                                                 c.suffix)%>
                         </li>
                       <% end %>
+                    <% end %>
                     <% end %>
                   </ul>
                 </p>
@@ -120,7 +125,7 @@
                                          @user.company.company_info.suffix) %>
                 </p>
                 <% end %>
-                <p><b>Salary Range:</b> <%= @user.present? ? convert_salary_range_to_words(@user.salary_range) : "" %></p>
+                <p><b>Salary Range:</b> <%= @user.salary_range.present? ? convert_salary_range_to_words(@user.salary_range) : "" %></p>
                 <p><b>Start Date:</b> <%= @user.present? ? @user.start_date : "" %><br>
                 </p>
         </section>

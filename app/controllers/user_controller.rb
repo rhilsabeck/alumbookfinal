@@ -70,7 +70,7 @@ class UserController < AuthenticatedController
     params.require(:user).permit(
       :avatar, :street, :city, :state, :zip, :spouse_first_name, :spouse_middle_initial,
       :spouse_last_name, :number_children, :birth_day, :ethnicity,
-      :general_opt_in, :email_opt_in, :phone_opt_in, :searchable,
+      :general_opt_in, :email_opt_in, :phone_opt_in, :badges_opt_in, :searchable,
       :status, :salary_range, :job_title, :start_date, :end_date, :program,
       login_attributes: [
         :id, :first_name, :middle_initial, :last_name,
@@ -91,5 +91,23 @@ class UserController < AuthenticatedController
     )
   end
 
+      # Method to convert salary_range from words to a number
+    def convert_salary_range_to_number (salary_range_text)
+      if salary_range_text == "< $ 49,000"
+        salary_range_num = 0
+      elsif salary_range_text == "$ 50,000 to $ 99,000"
+        salary_range_num = 1
+      elsif salary_range_text == "$ 100,000 to $ 149,000"
+        salary_range_num = 2
+      elsif salary_range_text == "$ 150,000 to $ 199,000"
+        salary_range_text_num = 3
+      else salary_range_text == "> $ 200,000"
+        salary_range_num = 4
+      end
+    end
+
 
 end
+
+
+

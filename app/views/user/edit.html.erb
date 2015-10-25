@@ -90,7 +90,7 @@
               </div>
               <div class="medium-3 columns">
                 <%= f.label :state %>
-                <%= f.select :state, Geography::US_STATES.map { |w,s| [s, w] } %>
+                <%= f.select :state, Geography::US_STATES.map { |w,s| [s, w] }, include_blank: true %>
               </div>
               <div class="medium-3 columns">
                 <%= f.label :zip %>
@@ -102,11 +102,12 @@
           <fieldset>
             <legend>Phones</legend>
             <div id="user_phones">
-              <% @user.user_phones.build if @user.user_phones.empty? %>
+              <% if @user.user_phones.present? %>
               <%= f.fields_for :user_phones do |f_phone| %>
                 <%= render 'user_phone_fields', f: f_phone %>
-                <%= link_to_add_association 'add phone', f, :user_phones %>
               <% end %>
+              <% end %>
+             <%= link_to_add_association 'add phone', f, :user_phones %>
             </div>
           </fieldset>
         </section>
@@ -121,7 +122,8 @@
               <div class="medium-6 columns">
               <div class="row">
               <%= f.label :status %>
-              <%= f.select :status, User.statuses.map { |w,| [w.humanize, w] } %>
+              <%= f.select :status, options_for_select([[ 'Currently Enrolled', 1], ['Alumni', 0 ]],
+                                                        selected: @user.status), include_blank: true %>
               </div>
             </div>
             </div>
@@ -129,7 +131,7 @@
               <div class="row">
               <div class="medium-11 columns">
               <%= f.label :program %>
-              <%= f.select :program, options_for_select([['Business Administration', 'Business Administration'],["International Business Administration",'International Business Administration'],["Education",'Education'],["Leadership Studies",'Leadership Studies'],["Liberal Studies",'Liberal studies'],["Management Information Systems",'Management Information Systems'],["Web and Internet application",'Web and Internet application']]) %>
+              <%= f.select :program, options_for_select(["Business Administration","International Business Administration","Education","Leadership Studies","Liberal Studies","Management Information Systems","Web and Internet application"], selected: @user.program), include_blank: true %>
               </div>
             </div>
             </div>
@@ -140,11 +142,12 @@
             <legend>Undergraduate Degrees</legend>
             <div class="block-list">
               <div id="undergraduate_degrees">
-                <% @user.undergraduate_degrees.build if @user.undergraduate_degrees.empty? %>
+                <% if @user.undergraduate_degrees.present? %>
                 <%= f.fields_for :undergraduate_degrees do |f_undergrad_degree| %>
                   <%= render 'undergraduate_degree_fields', f: f_undergrad_degree %>
-                  <%= link_to_add_association 'add degree', f, :undergraduate_degrees %>
                 <% end %>
+                <% end %>
+                <%= link_to_add_association 'add degree', f, :undergraduate_degrees %>
               </div>
             </div>
           </fieldset>
@@ -153,10 +156,10 @@
             <legend>Graduate Degrees</legend>
             <div class="block-list">
               <div id="graduate_degrees">
-                <% @user.graduate_degrees.build if @user.graduate_degrees.present? %>
+                <% if @user.graduate_degrees.present? %>
                 <%= f.fields_for :graduate_degrees do |f_grad_degree| %>
                   <%= render 'graduate_degree_fields', f: f_grad_degree %>
-                  <%= link_to_add_association 'add degree', f, :graduate_degrees %>
+                <% end %>
                 <% end %>
                 <%= link_to_add_association 'add degree', f, :graduate_degrees %>
               </div>
@@ -167,17 +170,22 @@
         <!--  Employment Section -->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEmploymentInfo">
           <div class="row">
-            <div class="medium-6 columns">
+            <div class="medium-5 columns">
               <%= f.label :job_title %>
               <%= f.text_field :job_title %>
             </div>
-            <div class="medium-3 columns">
+            <div class="medium-4 columns">
               <%= f.label :salary_range %>
-              <%= f.text_field :salary_range %>
+              <%= f.select :salary_range, options_for_select([["< $ 49,000", 0],
+                                                        ["$ 50,000 to $ 99,000", 1],
+                                                        ["$ 100,000 to $ 149,000", 2],
+                                                        ["$ 150,000 to $ 199,000",3],
+                                                        ["> $ 200,000", 4]],
+                                                        selected: @user.try(:salary_range)), include_blank: true %>
             </div>
             <div class="medium-3 columns">
               <%= f.label :start_date %>
-              <%= f.text_field :start_date %>
+              <%= f.date_select :start_date, order: [:month, :day, :year], include_blank: true %>
             </div>
           </div>
 
@@ -241,7 +249,7 @@
               <div class="row">
                 <div class="medium-6 columns">
                   <%= f.label :birth_day %>
-                  <%= f.text_field :birth_day %>
+                  <%= f.date_select :birth_day, order: [:month, :day, :year], include_blank: true %>
                 </div>
               </div>
             </div>
@@ -287,38 +295,31 @@
                   <legend>Opt In?</legend>
                   <div class="row">
                   <div class="medium-10 columns">
-                    <%= hidden_field_tag :general_opt_in, false %>
-                    <%= check_box_tag 'general_opt_in', 1, (@user.general_opt_in.present? ?
-                                  convert_opt_in_to_true_false(@user.general_opt_in) : 0),
-                                  :title => "Allow your name to be searched by other users" %>
+                    <%= f.check_box :general_opt_in, {title: "Allow your name to be searched by other users"}, 1, (@user.general_opt_in.present? ?
+                                  convert_opt_in_to_true_false(@user.general_opt_in) : 0) %>
                     <label for="general_opt_in">General opt in</label>
                   </div>
                   </div>
 
                   <div class="row">
                   <div class="medium-10 columns">
-                    <%= hidden_field_tag :email_opt_in, false %>
-                    <%= check_box_tag 'email_opt_in', 1, (convert_opt_in_to_true_false(
+                    <%= f.check_box :email_opt_in,{title: "Allow your email address to be visible by other users"}, 1, (convert_opt_in_to_true_false(
                                                             @user.email_opt_in.present? ?
-                                                            @user.email_opt_in : 0)),
-                                                            :title => "Allow your email address to be visible by other users" %>
+                                                            @user.email_opt_in : 0)) %>
                     <label for="email_opt_in">eMail opt in</label>
                   </div>
                   </div>
                   <div class="row">
                     <div class="medium-10 columns">
-                    <%= hidden_field_tag :phone_opt_in, false %>
-                    <%= check_box_tag 'phone_opt_in', 1,(convert_opt_in_to_true_false(
+                    <%= f.check_box :phone_opt_in, {title: "Allow your phone number to be visible by other users"},1,(convert_opt_in_to_true_false(
                                                             @user.present? ?
-                                                            @user.phone_opt_in : 0)),
-                                                            :title => "Allow your phone number to be visible by other users" %>
+                                                            @user.phone_opt_in : 0)) %>
                     <label for="phone_opt_in">Phone opt in</label>
                   </div>
                   </div>
                   <div class="row">
                     <div class="medium-10 columns">
-                    <%= hidden_field_tag :badges_opt_in, false %>
-                    <%= check_box_tag 'badges_opt_in', 1,(convert_opt_in_to_true_false(
+                    <%= f.check_box :badges_opt_in, {}, 1,(convert_opt_in_to_true_false(
                                                             @user.present? ?
                                                             @user.badges_opt_in : 0)) %>
                     <label for="badges_opt_in">Badge opt in</label>

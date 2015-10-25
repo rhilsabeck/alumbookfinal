@@ -13,14 +13,14 @@ class SearchusersController < ApplicationController
     
     # Shows result if something is been searched
     if !(params[:q].blank?)
-      @showResult = true#code
+      @showResult = true
     end
     
     # Check database for a matching user
     #@search = Login.joins('LEFT OUTER JOIN users ON users.login_id = logins.id').search(params[:q])
     
     #uncomment code below if searchable attribute is FUNCTIONAL
-    @search = Login.joins('LEFT OUTER JOIN users ON users.login_id = logins.id').where('users.searchable = true').search(params[:q])
+    @search = Login.joins('LEFT OUTER JOIN users ON users.login_id = logins.id').where("users.general_opt_in = 1").ransack(params[:q])
     
     @searchusers = @search.result
   end

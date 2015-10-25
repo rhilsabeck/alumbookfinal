@@ -5,6 +5,7 @@ module UserHelper
   # a string
   def concatenate_phone (phone_country_code, phone_area_code,
                          phone_prefix, phone_suffix)
+    phone_text = " "
     if phone_area_code.present? and phone_prefix.present? and phone_suffix.present?
       phone_text = (phone_area_code.to_s + "." +
                     phone_prefix.to_s + "." + phone_suffix.to_s)
@@ -18,10 +19,10 @@ module UserHelper
   # helper method to convert user.status from number stored in tables
   # to verbiage
   def convert_user_status_to_words (status_num)
-    status_num = "#{status_num}"
-    if status_num == "currently_enrolled"
+    #status_num = "#{status_num}"
+    if status_num == 1
       status_text = "Currently Enrolled"
-    elsif status_num == "alumni"
+    elsif status_num == 0
       status_text = "Alumni"
     end
   end
@@ -104,7 +105,7 @@ module UserHelper
 
      # Method to convert user.status from text to a number
     def convert_user_status_to_number (status_text)
-      if status_text == "Student"
+      if status_text == "Currently Enrolled"
         status_num = 0
       elsif status_text == "Alumni"
         status_num = 1

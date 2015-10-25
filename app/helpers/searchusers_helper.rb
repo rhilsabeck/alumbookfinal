@@ -32,7 +32,7 @@ module SearchusersHelper
   def display_basic_search_results_row(object)
     model_fields.each_with_object('') do |field, string|
       if model_fields.find_index(field) == 0
-        string << content_tag(:div, "First name: " + object.send(field), class: "row")
+        string << content_tag(:div,link_to(object.send(field), user_path(object.user), :style=>'color:#0011CC;'), class: "row")
       elsif model_fields.find_index(field) == 1
         string << content_tag(:div, "Last name: " + object.send(field), class: "row")
       else

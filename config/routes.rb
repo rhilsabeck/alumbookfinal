@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   get '/saved_lists/:id', to: 'saved_lists#show', as: 'saved_list'
   post '/saved_lists/:id', to: 'saved_lists#show'
 
-
+  #get '/user/:id', to: 'user#show'
 
   delete '/saved_lists/:id', to: 'saved_lists#destroy'
 

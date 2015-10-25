@@ -27,7 +27,7 @@
       </div>
       <div class="medium-4 columns">
         <%= f.label :graduation_date %>
-        <%= f.text_field :graduation_date %>
+        <%= f.date_select :graduation_date, order: [:month, :day, :year], include_blank: true %>
       </div>
     </div>
   </div>
