@@ -1,4 +1,4 @@
-<!--Created by Leiyang Guo
+<!--Created by Leiyang Guo(a few additions by Ryan Hilsabeck)
 With minimal assistance and advice with James Maher
 Using Foundation 5 and Ransack advanced search form-->
 <%= search_form_for @search, url: search_searchadmins_path, html: { method: :post } do |f| %>
@@ -17,13 +17,14 @@ Using Foundation 5 and Ransack advanced search form-->
   </p>
   
   <div class="row">
-    <div class="large-12 small-12 columns">
+    <div  align ="center" class="large-12 small-12 columns">
       <%= f.submit "search", :class => "round button" %>
     </div>
   </div>
 <% end %>
 
-<!--Partial to result-->
+<!--Partial to result, Ryan Hilsabeck added new save list partial from alumbook2-->
 <% if @showResult == true %>
     <%= render 'results' %>
+    <%= render partial: 'searchadmins/form_new_saved_list' %>
 <% end %>

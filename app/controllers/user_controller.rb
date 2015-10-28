@@ -1,9 +1,8 @@
 # Created by Tim Schneider and Maxwell Barvian
 class UserController < AuthenticatedController
   before_filter :redirect_admins!, only: :index
-  before_filter lambda{ unauthorized() unless current_login.authorized_to_show_profile? params[:id].to_i }, only: :show
+  #before_filter lambda{ unauthorized() unless current_login.authorized_to_show_profile? params[:id].to_i }, only: :show
   before_filter lambda{ unauthorized() unless current_login.authorized_to_edit_profile? params[:id].to_i }, only: [:edit, :update, :destroy_avatar]
-
   # Creates an action to use for the autocomplete Company textfield
   autocomplete :company, :name, column_name: 'company_name'
 
@@ -90,8 +89,8 @@ class UserController < AuthenticatedController
       ]
     )
   end
-
-      # Method to convert salary_range from words to a number
+    # Ryan Hilsabeck added this from alumbook2
+    # Method to convert salary_range from words to a number
     def convert_salary_range_to_number (salary_range_text)
       if salary_range_text == "< $ 49,000"
         salary_range_num = 0

@@ -1,13 +1,14 @@
+<!-- author: Brett Bush(Ryan Hilsabeck transferred the below from alumbook2 and corrected path names and some button classes) -->
 
-
-<!-- author: Brett Bush(Not Using this view right now but might add back in - Ryan Hilsabeck) -->
-
-
+<!-- Save List Button -->
+<div align="center">
+<button type="button" class="round button" onclick="toggle_saved_list_form();">Create or Add to Existing Saved List</button>
+</div>
 <!-- New Saved List Form Render -->
 <div id="saved_list_form" class="noprint" style="display: none;">
   <div class="row">
     <div class="large-6 medium-8 small-12 large-centered medium-centered small-centered columns">
-      <%= form_tag("/saved_lists/create", method:"post")  do %>
+      <%= form_tag saved_lists_create_path, method: "post" do %>
         <% @search_array.try(:each) do |search| %>
           <% if search.login_type == 2 %> <!-- if it's a user -->
             <%= hidden_field_tag "user_ids[]", search.user.try(:id) %> <!-- add it to list -->
@@ -18,7 +19,7 @@
         <%= label_tag "New list name:" %><%= text_field_tag :new_list_name %>
         <%= select_tag :list_name, options_from_collection_for_select(@saved_list_array, 'id', 'list_name'), {:include_blank => '-- Add to Saved List --'} %>
         <div align="center">
-          <%= submit_tag "Save", class: "button radius" %>
+          <%= submit_tag "Save", class: "round button" %>
         </div>
       <% end %>
     </div>

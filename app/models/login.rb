@@ -36,7 +36,7 @@ class Login < ActiveRecord::Base
   end
 
   def authorized_to_show_profile?(id)
-    id == user.id || admin? || worker?
+    id == user? || admin? || worker?
   end
 
   def authorized_to_edit_profile?(id)

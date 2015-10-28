@@ -27,10 +27,7 @@ class Admin::AccountsController < AdminController
   def create
     @login = Login.new(login_params)
     @login.build_user
-    #@login.user.update(general_opt_in: 0)
-    #@login.user.update(email_opt_in: 0)
-    #@login.user.update(phone_opt_in: 0)
-    #@login.user.update(badges_opt_in: 0)
+
 
     # Test for save successful and react
     if @login.save

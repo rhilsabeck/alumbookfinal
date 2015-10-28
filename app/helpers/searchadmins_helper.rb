@@ -1,4 +1,4 @@
-# Created by Leiyang Guo
+# Created by Leiyang Guo( a few additions by Ryan Hilsabeck)
 # With minimal assistance and advice with James Maher
 # Helper containing helper methods for Searchadmins
 module SearchadminsHelper
@@ -41,7 +41,7 @@ module SearchadminsHelper
       string << content_tag(:tr, display_search_results_row(object))
     end
   end
-  
+  # Ryan Hilsabeck added correct link_to user path and style to both name and email to link to users profile
   # Return and display search result in specific row with links to user profiles
   def display_search_results_row(object)
     # Store variable for saved list
@@ -50,9 +50,9 @@ module SearchadminsHelper
     fieldCount = 0
     model_fields.each_with_object('') do |field, string|
       if fieldCount == 0
-        string << content_tag(:td, link_to(object.send(field), '/admin/logins/' + object.id.to_s))#code
+        string << content_tag(:td, link_to(object.send(field), user_path(object.user), :style=>'color:#0011CC;'))#code
       else
-        string << content_tag(:td, object.send(field))
+        string << content_tag(:td, link_to(object.send(field), user_path(object.user), :style=>'color:#0011CC;'))
       end
       
       fieldCount += 1

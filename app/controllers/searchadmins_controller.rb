@@ -1,4 +1,4 @@
-# Created by Leiyang Guo
+# Created by Leiyang Guo(a few additions by Ryan Hilsabeck)
 # With minimal assistance and advice with James Maher
 # Searchadmins controller
 # This file contains the controller for Searchadmins in view folder
@@ -21,6 +21,9 @@ class SearchadminsController < ApplicationController
     @search = Login.search(params[:q])
     @searchadmin = @search.result
     @search.build_condition if @search.conditions.empty?
+
+    #Ryan Hilsabeck added this to get existing save lists
+    @saved_list_array = Login.find(current_login.id).saved_lists
     
     # Session variable store saved list
     session[:sResult] = Array.new
@@ -28,6 +31,7 @@ class SearchadminsController < ApplicationController
   
   # Define Searchadmins/add.html.erb actions
   def add
-    @objectIds = session[:sResult]
+     @saved_list_array = Login.find(current_login.id).saved_lists
+     @objectIds = session[:sResult]
   end
 end
