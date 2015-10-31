@@ -21,12 +21,20 @@ class SearchadminsController < ApplicationController
     @search = Login.search(params[:q])
     @searchadmin = @search.result
     @search.build_condition if @search.conditions.empty?
+    
+    @search_array = Array.new
+    @searchadmin.each do |result|
+      @search_array.push result 
+    end
 
+    @search_array.try(:each) do |search| 
+      puts search.id
+    end 
     #Ryan Hilsabeck added this to get existing save lists
     @saved_list_array = Login.find(current_login.id).saved_lists
     
     # Session variable store saved list
-    session[:sResult] = Array.new
+    #session[:sResult] = Array.new
   end
   
   # Define Searchadmins/add.html.erb actions

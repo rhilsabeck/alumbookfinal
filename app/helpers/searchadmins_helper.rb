@@ -45,7 +45,7 @@ module SearchadminsHelper
   # Return and display search result in specific row with links to user profiles
   def display_search_results_row(object)
     # Store variable for saved list
-    session[:sResult].push(object.id)
+    #session[:sResult].push(object.id)
     
     fieldCount = 0
     model_fields.each_with_object('') do |field, string|

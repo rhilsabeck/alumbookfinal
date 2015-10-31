@@ -1,6 +1,12 @@
 <!--Created by Leiyang Guo(a few additions by Ryan Hilsabeck)
 With minimal assistance and advice with James Maher
 Using Foundation 5 and Ransack advanced search form-->
+<br /><br/>
+<div class="row panel radius">
+  <div class="small-12 medium-12 large-12 column">
+<div align="center">
+  <h1>Advanced Search</h1>
+<hr/><br /><br/>
 <%= search_form_for @search, url: search_searchadmins_path, html: { method: :post } do |f| %>
   
     <%= f.condition_fields do |c| %>
@@ -28,3 +34,6 @@ Using Foundation 5 and Ransack advanced search form-->
     <%= render 'results' %>
     <%= render partial: 'searchadmins/form_new_saved_list' %>
 <% end %>
+</div>
+</div>
+</div>

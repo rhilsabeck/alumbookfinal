@@ -39,8 +39,8 @@ Rails.application.routes.draw do
   post 'survey_admin/sub_questions' => 'survey_admin/sub_questions'
   post 'survey/create' => 'survey#create'
 
-  get 'saved_lists/index' => 'saved_lists#index'
-  post 'saved_lists/create' => 'saved_lists#create'
+  #get 'saved_lists/index' => 'saved_lists#index'
+  #post 'saved_lists/create' => 'saved_lists#create'
 
 
   get 'survey_admin/new_q' => 'survey_admin#new_q'
@@ -52,14 +52,20 @@ Rails.application.routes.draw do
   post 'survey_admin/edit' =>'survey_admin#edit'
   post 'survey/index' => 'survey#index'
 #  post 'survey_admin/new_q' => 'survey_admin#new_q'
-
-
+  get 'saved_lists' => 'saved_lists#index'
+  get 'saved_lists/index' => 'saved_lists#index'
+  post 'saved_lists/create' => 'saved_lists#create'
   get '/saved_lists/:id', to: 'saved_lists#show', as: 'saved_list'
   post '/saved_lists/:id', to: 'saved_lists#show'
+  delete '/saved_lists/:id', to: 'saved_lists#destroy'
+  post '/saved_lists/delete_user/:id', to: "saved_lists#delete_user"
+
+  #get '/saved_lists/:id', to: 'saved_lists#show', as: 'saved_list'
+  #post '/saved_lists/:id', to: 'saved_lists#show'
 
   #get '/user/:id', to: 'user#show'
 
-  delete '/saved_lists/:id', to: 'saved_lists#destroy'
+  #delete '/saved_lists/:id', to: 'saved_lists#destroy'
 
   delete '/survey_admin/:id', to:'survey_admin#destroy'
 

@@ -10,8 +10,8 @@
     <div class="large-6 medium-8 small-12 large-centered medium-centered small-centered columns">
       <%= form_tag saved_lists_create_path, method: "post" do %>
         <% @search_array.try(:each) do |search| %>
-          <% if search.login_type == 2 %> <!-- if it's a user -->
-            <%= hidden_field_tag "user_ids[]", search.user.try(:id) %> <!-- add it to list -->
+          <% if search.user? %> <!-- if it's a user -->
+            <%= hidden_field_tag "user_ids[]", search.id %> <!-- add it to list -->
           <% end %>
         <% end %>
         <%= hidden_field_tag(:login_id, current_login.id) %>
