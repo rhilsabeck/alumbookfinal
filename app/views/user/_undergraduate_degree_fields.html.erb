@@ -1,3 +1,4 @@
+
 <div class="pack pack-middle nested-fields">
   <div class="pack-item pack-full">
     <div class="row">
@@ -24,7 +25,7 @@
 
       <div class="medium-5 columns">
         <%= f.label :graduation_date %>
-        <%= f.date_select :graduation_date, order: [:month, :day, :year], include_blank: true %>
+        <%= f.text_field :graduation_date,:class => 'datepicker' %>
       </div>
     </div>
   </div>

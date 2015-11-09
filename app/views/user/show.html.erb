@@ -5,7 +5,17 @@
       <div class="profile-avatar">
         <%= image_tag @user.avatar.url(:full) %>
       </div>
-      <h4><%= @user.login.full_name %></h4>
+      <h5 align="center"><%= @user.login.full_name %></h5>
+      <% if current_login.authorized_to_edit_profile? @user.id %>
+        <br/>
+        <h6><b>Giving Back Details</b></h6>
+        <p> You have <b><%= giving_back_jobs_internships @user.id %></b> approved internships/jobs </p>
+        <h6><b>Opt In Details</b></h6>
+          <b>General:</b> <%= convert_opt_in_to_words(@user.general_opt_in.present? ? @user.general_opt_in : 0) %><br/>
+          <b>Email:</b> <%= convert_opt_in_to_words(@user.email_opt_in.present? ? @user.email_opt_in : 0) %>
+          <br/>
+          <b>Phone:</b> <%= convert_opt_in_to_words(@user.phone_opt_in.present? ? @user.phone_opt_in : 0) %>
+      <% end %>
       <% if current_login.admin? || current_login.worker? %>
         <hr />
         <h6>Last Updated: </h6><%= @user.login.updated_at.to_s(:date_format)%>
@@ -26,7 +36,7 @@
         <% end %>
           <dl class="tabs" data-tab>
             <dd class="active">
-              <a href="#pnlContactInfo">Contact</a>
+              <a href="#pnlPersonalInfo">Personal</a>
             </dd>
             <dd>
               <a href="#pnlEducationInfo">Education</a>
@@ -34,16 +44,10 @@
             <dd>
               <a href="#pnlEmploymentInfo">Employment</a>
             </dd>
-            <dd>
-              <a href="#pnlPersonalInfo">Personal</a>
-            </dd>
-            <dd>
-              <a href="#pnlPrivacyInfo">Privacy</a>
-            </dd>
           </dl>
       </div>
       <div class="tabs-content">
-        <section role="tabpanel" aria-hidden="false"class="content active" id="pnlContactInfo">
+        <section role="tabpanel" aria-hidden="false"class="content active" id="pnlPersonalInfo">
                 <p><b>Address:</b><br>
                     <%= @user.try(:street) %><br>
                     <%= @user.try(:city) %> ,
@@ -51,13 +55,13 @@
                     <%= @user.try(:zip) %><br>
                 </p>
                 <p><b>E-Mail:</b><br> 
-                 <% if @user.email_opt_in == 1 %>
+                 <% if @user.email_opt_in == 1 || current_login.admin? || current_login.worker?  %>
                       <%= mail_to @user.login.try(:email) %></p>
                   <% end %>
                 <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
                 <p><b>Phone Numbers:</b><br>
                   <ul id="user_phones">
-                    <% if @user.phone_opt_in == 1 %>
+                    <% if @user.phone_opt_in == 1 || current_login.admin? || current_login.worker? %>
                     <% if @user.user_phones.all.present? %>
                       <% @user.user_phones.all.each do |c| %>
                         <li>
@@ -72,6 +76,13 @@
                     <% end %>
                   </ul>
                 </p>
+                <p><b>Birth Date:</b> <%= @user.try(:birth_day) %></p>
+                <p><b>Ethnicity:</b> <%= @user.try(:ethnicity) %></p>
+                <p><b>Spouse Name:</b> <%= @user.try(:spouse_first_name) %>
+                               <%= @user.try(:spouse_middle_initial) %>
+                               <%= @user.try(:spouse_last_name) %>
+                </p>
+                <p><b>Number of children:</b> <%= @user.try(:number_children) %></p>
         </section>
     <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEducationInfo">
@@ -128,26 +139,6 @@
                 <p><b>Salary Range:</b> <%= @user.salary_range.present? ? convert_salary_range_to_words(@user.salary_range) : "" %></p>
                 <p><b>Start Date:</b> <%= @user.present? ? @user.start_date : "" %><br>
                 </p>
-        </section>
-        <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
-        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPersonalInfo">
-                <p><b>Birth Date:</b> <%= @user.try(:birth_day) %></p>
-                <p><b>Ethnicity:</b> <%= @user.try(:ethnicity) %></p>
-                <p><b>Spouse Name:</b> <%= @user.try(:spouse_first_name) %>
-                               <%= @user.try(:spouse_middle_initial) %>
-                               <%= @user.try(:spouse_last_name) %>
-                </p>
-                <p><b>Number of children:</b> <%= @user.try(:number_children) %></p>
-        </section>
-        <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
-        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPrivacyInfo">
-                <fieldset>
-                  <legend>Opt In?</legend>
-                    <p><b>General:</b> <%= convert_opt_in_to_words(@user.general_opt_in.present? ? @user.general_opt_in : 0) %></p>
-                    <p><b>Email:</b> <%= convert_opt_in_to_words(@user.email_opt_in.present? ? @user.email_opt_in : 0) %></p>
-                    <p><b>Phone:</b> <%= convert_opt_in_to_words(@user.phone_opt_in.present? ? @user.phone_opt_in : 0) %></p>
-                    <p><b>Badges:</b> <%= convert_opt_in_to_words(@user.phone_opt_in.present? ? @user.badges_opt_in : 0) %></p>
-                </fieldset>
         </section>
       </div>
     </div>

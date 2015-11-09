@@ -1,3 +1,21 @@
+<h1 align="center">Jobs</h1>
+<% unless @jobs.blank? %>
+  <div class="row">
+    <div class="medium-10 large-8 small-centered columns">
+      <% @jobs.each do |giving_back| %>
+        <%= render giving_back %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <% @vcenter = true %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= render 'shared/empty', message: "No jobs." %>
+    </div>
+  </div>
+<% end %>
+<h1 align="center">Internships</h1>
 <% unless @internships.blank? %>
   <div class="row">
     <div class="medium-10 large-8 small-centered columns">
@@ -14,3 +32,4 @@
     </div>
   </div>
 <% end %>
+

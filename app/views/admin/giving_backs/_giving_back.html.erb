@@ -1,23 +1,27 @@
-<% # Author: Maxwell Barvian %>
+<% # Author: Maxwell Barvian and Ryan Hilsabeck(additions of approved and contacted) %>
 <div class="opportunity panel radius" data-expandable>
   <div class="pack pack-middle">
     <%= link_to giving_back.user, class: 'pack-item opportunity-avatar' do %>
       <%= image_tag giving_back.user.avatar.url(:thumb) %>
     <% end %>
     <div class="pack-item">
-      <% unless giving_back.internship? %>
+      <% unless giving_back.internship? || giving_back.jobs? %>
         <h5><%= giving_back.subject %></h5>
       <% else %>
         <h5><%= giving_back.position %></h5>
       <% end %>
-      <% if giving_back.internship? %><span class="opportunity-company"><%= giving_back.company.company_name %></span><% end %>
+      <% if giving_back.internship? || giving_back.jobs? %>
+        <span class="opportunity-company"><%= giving_back.company.company_name %></span>
+      <% end %>
       <time pubdate datetime="<%= giving_back.created_at.to_formatted_s(:pubdate) %>" class="opportunity-date"><%= giving_back.created_at.to_formatted_s(:human) %></span>
+        <% if giving_back.contacted? %>
+        <h5><%= id_to_name giving_back.contacted_by %> has made contact</h5>
+        <% end %>
     </div>
     <div class="pack-item opportunity-type">
       <i class="fi-<%= icon_for_giving_back_type giving_back.type %> opportunity-type-icon"></i>
       <span class="opportunity-type-label"><%= humanize_giving_back_type giving_back.type %></span>
     </div>
-    <% unless giving_back.completed? %>
       <div class="pack-item pack-shrink">
         <ul class="button-group opportunity-actions">
           <% if giving_back.hidden? %>
@@ -42,6 +46,33 @@
               <% end %>
             </li>
           <% else %>
+            <% if (giving_back.jobs? || giving_back.internship?) && !giving_back.approved? %>
+              <li>
+                <%= link_to admin_giving_back_path(
+                    giving_back,
+                    giving_back: { approved: true }
+                  ),
+                  method: :put,
+                  data: { confirm: 'Are you sure you want to approve this internship or job?' },
+                  title: 'Approve',
+                  class: 'tiny success icon button' do %>
+                  <i class="fi-like large"></i>
+                <% end %>
+              </li>
+            <% elsif (!giving_back.jobs? && !giving_back.internship?) && !giving_back.contacted? %>
+              <li>
+                <%= link_to admin_giving_back_path(
+                    giving_back,
+                    giving_back: { contacted: true, contacted_by: current_login.id}
+                  ),
+                  method: :put,
+                  data: { confirm: 'Are you sure you want to mark this opportunity as contacted?' },
+                  title: 'Mark as contacted',
+                  class: 'tiny success icon button' do %>
+                  <i class="fi-check large"></i>
+                <% end %>
+              </li>
+            <% else %>
             <li>
               <%= link_to admin_giving_back_path(
                   giving_back,
@@ -53,42 +84,14 @@
                 <i class="fi-archive large"></i>
               <% end %>
             </li>
-
-            <% if giving_back.internship? && !giving_back.approved? %>
-              <li>
-                <%= link_to admin_giving_back_path(
-                    giving_back,
-                    giving_back: { approved: true }
-                  ),
-                  method: :put,
-                  data: { confirm: 'Are you sure you want to approve this internship?' },
-                  title: 'Approve',
-                  class: 'tiny success icon button' do %>
-                  <i class="fi-like large"></i>
-                <% end %>
-              </li>
-            <% else %>
-              <li>
-                <%= link_to admin_giving_back_path(
-                    giving_back,
-                    giving_back: { completed: true }
-                  ),
-                  method: :put,
-                  data: { confirm: 'Are you sure you want to mark this opportunity as completed?' },
-                  title: 'Mark as complete',
-                  class: 'tiny success icon button' do %>
-                  <i class="fi-check large"></i>
-                <% end %>
-              </li>
             <% end %>
           <% end %>
         </ul>
       </div>
-    <% end %>
   </div>
   <div class="expand">
     <p class="opportunity-description"><%= giving_back.description %></p>
-    <% if giving_back.internship? %>
+    <% if giving_back.internship? || giving_back.jobs? %>
       <hr />
       <h6>Requirements</h6>
       <p class="opportunity-requirements"><%= giving_back.requirements %></p>

@@ -1,5 +1,15 @@
 module UserHelper
 
+  def giving_back_jobs_internships(id)
+    jobs_internships = GivingBack.where(["user_id = ? and approved = ? and hidden = ?", id, true, false])
+    if jobs_internships.nil?
+      count = 0
+    else
+    count = jobs_internships.count
+    end
+    return count
+  end
+
   # Ryan Hilsabeck additions from alumbook2. Helper methods for User information 
   # helper method to concatenate the elements of the phone number into
   # a string

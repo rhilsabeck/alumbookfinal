@@ -2,13 +2,14 @@
 class GivingBack < ActiveRecord::Base
   self.inheritance_column = nil # Allows the type column to be used without interfering with Rails' conventions
   default_scope { order('created_at DESC') } # Sort by date created in descending order by default
-  scope :pending, -> { where(hidden: false, completed: false) }
-  scope :completed, -> { where(completed: true) }
+  scope :pending, -> { where(hidden: false, contacted: false, approved: false) }
+  scope :contacted, -> { where(contacted: true, hidden: false) }
+  scope :approved, -> {where(approved: true, hidden: false)}
   scope :archived, -> { where(hidden: true) }
 
   belongs_to :user
   belongs_to :company
-  enum type: [ :internship, :mentoring, :guest_speaking, :other ]
+  enum type: [ :internship, :mentoring, :guest_speaking, :other, :jobs]
 
   validates :subject, presence: true, if: :needs_subject?
   validates :position, presence: true, if: :needs_position?
@@ -23,15 +24,15 @@ class GivingBack < ActiveRecord::Base
   end
 
   def needs_position?
-    internship?
+    internship? || jobs?
   end
 
   def needs_company?
-    internship?
+    internship? || jobs?
   end
 
   def needs_requirements?
-    internship?
+    internship? || jobs?
   end
 
   def contact_full_name

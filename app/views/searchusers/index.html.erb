@@ -1,20 +1,30 @@
 <!--Created by Leiyang Guo
 With minimal assistance and advice with James Maher
 Using foundation 5 and Ransack basic search form-->
+<br /><br/>
+<div class="row panel radius">
+  <div class="small-12 medium-12 large-12 column">
+<div align="center">
+  <h1>User Search</h1>
+  <p>Search other users by first or last name</p>
+<hr/><br /><br/>
 <%= search_form_for @search, url: search_searchusers_path, html: { method: :post } do |f| %>
     <div class="row">
-      <p>
-        <div class="large-8 small-8 columns">
-          <%= f.text_field :first_name_or_last_name_or_email_cont %>
+        <div align= "center" class="large-12 small-12 columns">
+          <%= f.text_field :first_name_or_last_name_cont %>
         </div>
-        <div class="large-4 small-4 columns">
-          <%= f.submit "search", :class => "round button" %>
-        </div>
-      </p>
     </div>
+  <div class="row">
+    <div  align ="center" class="large-12 small-12 columns">
+      <%= f.submit "search", :class => "round button" %>
+    </div>
+  </div>
 <% end %>
   
 <!--Render basic search result-->
 <% if @showResult == true %>
     <%= render 'results' %>
 <% end %>
+</div>
+</div>
+</div>

@@ -6,8 +6,11 @@
         <li class="<%= 'active' if current_page?(admin_giving_backs_path) %>">
           <%= link_to 'New', admin_giving_backs_path %>
         </li>
-        <li class="<%= 'active' if current_page?(completed_admin_giving_backs_path) %>">
-          <%= link_to 'Completed', completed_admin_giving_backs_path %>
+        <li class="<%= 'active' if current_page?(contacted_admin_giving_backs_path) %>">
+          <%= link_to 'Contacted', contacted_admin_giving_backs_path %>
+        </li>
+        <li class="<%= 'active' if current_page?(approved_admin_giving_backs_path) %>">
+          <%= link_to 'Approved', approved_admin_giving_backs_path %>
         </li>
         <li class="<%= 'active' if current_page?(archived_admin_giving_backs_path) %>">
           <%= link_to 'Archived', archived_admin_giving_backs_path %>

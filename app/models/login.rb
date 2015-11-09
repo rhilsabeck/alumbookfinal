@@ -35,6 +35,10 @@ class Login < ActiveRecord::Base
     end
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ['username', 'first_name', 'last_name']
+  end
+
   def authorized_to_show_profile?(id)
     id == user? || admin? || worker?
   end
@@ -54,6 +58,6 @@ class Login < ActiveRecord::Base
   end
 
   def full_name
-    "#{first_name}#{' ' + middle_initial.upcase + '.' if middle_initial} #{last_name}"
+    "#{first_name.camelize }  #{last_name.camelize}"
   end
 end

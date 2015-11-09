@@ -15,37 +15,16 @@
         <% end %>
       </div>
       <%= f.file_field :avatar %>
-
-      <%= f.fields_for :login do |f_login| %>
-        <div class="row">
-          <div class="small-8 columns">
-            <%= f_login.label :first_name %>
-            <%= f_login.text_field :first_name %>
-          </div>
-          <div class="small-4 columns">
-            <%= f_login.label :middle_initial, 'MI' %>
-            <%= f_login.text_field :middle_initial, maxlength: 1 %>
-          </div>
-        </div>
-
-
-        <%= f_login.label :last_name %>
-        <%= f_login.text_field :last_name %>
-
-        <fieldset>
-          <legend>Login</legend>
-          <%= f_login.label :email %>
-          <%= f_login.text_field :email %>
-
-          <%= f_login.label :username %>
-          <%= f_login.text_field :username %>
-
-          <%= f_login.label :New_Password %>
-          <%= f_login.password_field :password, autocomplete: "off" %>
-
-          <%= f_login.label :Confirm_Password %>
-          <%= f_login.password_field :password_confirmation, autocomplete: "off" %>
-        </fieldset>
+      <h5 align="center"><%= @user.login.full_name %></h5>
+      <% if current_login.authorized_to_edit_profile? @user.id %>
+        <br/>
+        <h6><b>Giving Back Details</b></h6>
+        <p> You have <b><%= giving_back_jobs_internships @user.id %></b> approved internships/jobs </p>
+        <h6><b>Opt In Details</b></h6>
+          <b>General:</b> <%= convert_opt_in_to_words(@user.general_opt_in.present? ? @user.general_opt_in : 0) %><br/>
+          <b>Email:</b> <%= convert_opt_in_to_words(@user.email_opt_in.present? ? @user.email_opt_in : 0) %>
+          <br/>
+          <b>Phone:</b> <%= convert_opt_in_to_words(@user.phone_opt_in.present? ? @user.phone_opt_in : 0) %>
       <% end %>
     </div>
   </div>
@@ -57,7 +36,7 @@
         <% # Changes made by Ryan Hilsabeck to move some alumbook2 tab names below %>
           <dl class="tabs" data-tab>
             <dd class="active">
-              <a href="#pnlContactInfo">Contact</a>
+              <a href="#pnlPersonalInfo">Personal</a>
             </dd>
             <dd>
               <a href="#pnlEducationInfo">Education</a>
@@ -66,7 +45,7 @@
               <a href="#pnlEmploymentInfo">Employment</a>
             </dd>
             <dd>
-              <a href="#pnlPersonalInfo">Personal</a>
+              <a href="#pnlPasswordInfo">Password</a>
             </dd>
             <dd>
               <a href="#pnlPrivacyInfo">Privacy</a>
@@ -76,7 +55,26 @@
       <div class="tabs-content">
         <% # Changes made by Ryan Hilsabeck to move some alumbook2 to correct fields to edit in this tab %>
         <!-- Contact Section  -->
-        <section role="tabpanel" aria-hidden="false" class="content active" id="pnlContactInfo">
+        <section role="tabpanel" aria-hidden="false" class="content active" id="pnlPersonalInfo">
+          <%= f.fields_for :login do |f_login| %>
+          <div class="row">
+          <div class="small-3 columns">
+            <%= f_login.label :first_name %>
+            <%= f_login.text_field :first_name %>
+          </div>
+          <div class="small-1 columns">
+            <%= f_login.label :middle_initial, 'MI' %>
+            <%= f_login.text_field :middle_initial, maxlength: 1 %>
+          </div>
+          <div class="small-8 columns">
+            <%= f_login.label :last_name %>
+            <%= f_login.text_field :last_name %>
+          </div>
+          </div>
+            <%= f_login.label :email %>
+            <%= f_login.text_field :email %>
+  
+          <% end %>
 
           <fieldset>
             <legend>Address</legend>
@@ -110,6 +108,50 @@
              <%= link_to_add_association 'add phone', f, :user_phones %>
             </div>
           </fieldset>
+
+          <fieldset>
+            <legend>Personal Information</legend>
+          <div class="row">
+            <div class="medium-6 columns">
+              <div class="row">
+                <div class="medium-6 columns">
+                  <%= f.label 'Birthday' %>
+                  <%= f.text_field :birth_day,:class => 'datepicker' %>
+                </div>
+              </div>
+            </div>
+            <div class="medium-6 columns">
+            <div class="medium-6 columns">
+              <%= f.label :ethnicity %>
+              <%= f.text_field :ethnicity %>
+            </div>
+          </div>
+          </div>
+        </fieldset>
+
+
+            <div class="row">
+              <div class="medium-10 columns">
+                <div class="row">
+                  <div class="medium-5 columns">
+                    <%= f.label :spouse_first_name %>
+                    <%= f.text_field :spouse_first_name %>
+                  </div>
+                  <div class="medium-2 columns">
+                    <%= f.label :spouse_middle_initial, 'MI' %>
+                    <%= f.text_field :spouse_middle_initial %>
+                  </div>
+                  <div class="medium-5 columns">
+                    <%= f.label :spouse_last_name %>
+                    <%= f.text_field :spouse_last_name %>
+                  </div>
+                </div>
+              </div>
+              <div class="medium-2 columns">
+                <%= f.label :number_of_children, '# children' %>
+                <%= f.text_field :number_children %>
+              </div>
+            </div>
         </section>
 
         <!-- Education Section  -->
@@ -169,6 +211,8 @@
 
         <!--  Employment Section -->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEmploymentInfo">
+          <fieldset>
+            <legend>Employment Information</legend>
           <div class="row">
             <div class="medium-5 columns">
               <%= f.label :job_title %>
@@ -185,9 +229,10 @@
             </div>
             <div class="medium-3 columns">
               <%= f.label :start_date %>
-              <%= f.date_select :start_date, order: [:month, :day, :year], include_blank: true %>
+              <%= f.datetime_field :start_date,:id => "datepicker"  %>
             </div>
           </div>
+         </fieldset>
 
           <fieldset>
             <legend>Employer</legend>
@@ -239,54 +284,19 @@
           </fieldset>
         </section>
 
-        <!--  Employment Section -->
+        <!--  Personal Section -->
         <!--  Ryan Hilsabeck added this info below-->
-        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPersonalInfo">
-          <fieldset>
-            <legend>Personal Information</legend>
-          <div class="row">
-            <div class="medium-6 columns">
-              <div class="row">
-                <div class="medium-6 columns">
-                  <%= f.label :birth_day %>
-                  <%= f.date_select :birth_day, order: [:month, :day, :year], include_blank: true %>
-                </div>
-              </div>
-            </div>
-            <div class="medium-6 columns">
-            <div class="medium-6 columns">
-              <%= f.label :ethnicity %>
-              <%= f.text_field :ethnicity %>
-            </div>
-          </div>
-          </div>
-        </fieldset>
+        <section role="tabpanel" aria-hidden="true" class="content" id="pnlPasswordInfo">
+          <%= f.fields_for :login do |f_login| %>
+            <fieldset>
+              <legend>Password Reset</legend>
+                <%= f_login.label :New_Password %>
+                <%= f_login.password_field :password, autocomplete: "off" %>
 
-          <fieldset>
-            <legend>Marital Status</legend>
-            <div class="row">
-              <div class="medium-10 columns">
-                <div class="row">
-                  <div class="medium-5 columns">
-                    <%= f.label :spouse_first_name %>
-                    <%= f.text_field :spouse_first_name %>
-                  </div>
-                  <div class="medium-2 columns">
-                    <%= f.label :spouse_middle_initial, 'MI' %>
-                    <%= f.text_field :spouse_middle_initial %>
-                  </div>
-                  <div class="medium-5 columns">
-                    <%= f.label :spouse_last_name %>
-                    <%= f.text_field :spouse_last_name %>
-                  </div>
-                </div>
-              </div>
-              <div class="medium-2 columns">
-                <%= f.label :number_of_children, '# children' %>
-                <%= f.text_field :number_children %>
-              </div>
-            </div>
-          </fieldset>
+                <%= f_login.label :Confirm_Password %>
+                <%= f_login.password_field :password_confirmation, autocomplete: "off" %>
+        </fieldset>
+      <% end %>
         </section>
        <!--  Privacy Section -->
         <!--  Ryan Hilsabeck added this info below-->
@@ -295,34 +305,26 @@
                   <legend>Opt In?</legend>
                   <div class="row">
                   <div class="medium-10 columns">
-                    <%= f.check_box :general_opt_in, {title: "Allow your name to be searched by other users"}, 1, (@user.general_opt_in.present? ?
+                    <%= f.check_box :general_opt_in, {}, 1, (@user.general_opt_in.present? ?
                                   convert_opt_in_to_true_false(@user.general_opt_in) : 0) %>
-                    <label for="general_opt_in">General opt in</label>
+                    <label for="general_opt_in">General opt in (Allow your name to be searched by other users)</label>
                   </div>
                   </div>
 
                   <div class="row">
                   <div class="medium-10 columns">
-                    <%= f.check_box :email_opt_in,{title: "Allow your email address to be visible by other users"}, 1, (convert_opt_in_to_true_false(
+                    <%= f.check_box :email_opt_in,{}, 1, (convert_opt_in_to_true_false(
                                                             @user.email_opt_in.present? ?
                                                             @user.email_opt_in : 0)) %>
-                    <label for="email_opt_in">eMail opt in</label>
+                    <label for="email_opt_in">eMail opt in (Allow your email address to be visible by other users)</label>
                   </div>
                   </div>
                   <div class="row">
                     <div class="medium-10 columns">
-                    <%= f.check_box :phone_opt_in, {title: "Allow your phone number to be visible by other users"},1,(convert_opt_in_to_true_false(
+                    <%= f.check_box :phone_opt_in, {},1,(convert_opt_in_to_true_false(
                                                             @user.present? ?
                                                             @user.phone_opt_in : 0)) %>
-                    <label for="phone_opt_in">Phone opt in</label>
-                  </div>
-                  </div>
-                  <div class="row">
-                    <div class="medium-10 columns">
-                    <%= f.check_box :badges_opt_in, {}, 1,(convert_opt_in_to_true_false(
-                                                            @user.present? ?
-                                                            @user.badges_opt_in : 0)) %>
-                    <label for="badges_opt_in">Badge opt in</label>
+                    <label for="phone_opt_in">Phone opt in (Allow your phone number to be visible by other users)</label>
                   </div>
                   </div>
                 </fieldset>

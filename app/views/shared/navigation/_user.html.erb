@@ -23,6 +23,7 @@
     <li class="has-dropdown <%= 'active' if params[:controller] == 'giving_backs' %>">
       <a href="#">Give Back</a>
       <ul class="dropdown">
+        <li><%= link_to 'Job', new_giving_back_path('jobs') %></li>
         <li><%= link_to 'Internship', new_giving_back_path('internship') %></li>
         <li><%= link_to 'Mentoring', new_giving_back_path('mentoring') %></li>
         <li><%= link_to 'Guest Speaking', new_giving_back_path('guest_speaking') %></li>

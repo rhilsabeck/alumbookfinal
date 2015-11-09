@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ['program', 'company_id']
+  end
+
   # Leiyang Guo and Victor Bashorun set association
 
   belongs_to :login

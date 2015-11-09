@@ -2,6 +2,7 @@
 #
 #= require jquery
 #= require jquery_ujs
+#= require jquery-ui
 #= require jquery-ui/autocomplete
 #= require autocomplete-rails
 #= require cocoon
@@ -27,6 +28,9 @@ ready = ->
     setTimeout ->
       if $timeout.is('.alert-box') then $timeout.find("a.close").trigger("click.fndtn.alert") else $timeout.fadeOut()
     , $timeout.data('timeout') * 1000
+
+
+  $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'})
 
   # Expandables
   $expandables = $('[data-expandable]')

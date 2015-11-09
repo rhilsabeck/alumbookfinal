@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151011194052) do
+ActiveRecord::Schema.define(version: 20151104235451) do
 
   create_table "colleges", force: :cascade do |t|
     t.string   "college_name", limit: 255
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20151011194052) do
     t.text     "description",        limit: 65535
     t.text     "requirements",       limit: 65535
     t.boolean  "approved",           limit: 1,     default: false
-    t.boolean  "completed",          limit: 1,     default: false
+    t.boolean  "contacted",          limit: 1,     default: false
     t.integer  "type",               limit: 4
     t.string   "contact_first_name", limit: 255
     t.string   "contact_last_name",  limit: 255
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20151011194052) do
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.boolean  "hidden",             limit: 1,     default: false
+    t.integer  "contacted_by",       limit: 4
   end
 
   add_index "giving_backs", ["company_id"], name: "index_giving_backs_on_company_id", using: :btree

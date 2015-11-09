@@ -5,11 +5,11 @@ Using foundation 5 and ransack advanced search form-->
   <div class="field">
     <div class="large-3 small-3 columns">
       <%= f.attribute_fields do |a| %>
-        <%= a.attribute_select associations: :user %>
+        <%= a.attribute_select associations: [:user] %>
       <% end %>
     </div>
     <div class="large-3 small-3 columns">
-      <%= f.predicate_select %>
+      <%= f.predicate_select :only => [:cont, :eq] %>
     </div>
     <div class="large-3 small-3 columns">
       <%= f.value_fields do |v| %>

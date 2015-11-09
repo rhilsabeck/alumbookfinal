@@ -4,8 +4,13 @@ class Admin::GivingBacksController < AdminController
     @opportunities = GivingBack.pending
   end
 
-  def completed
-    @opportunities = GivingBack.completed
+  def contacted
+    @opportunities = GivingBack.contacted
+    render 'index'
+  end
+
+  def approved
+    @opportunities = GivingBack.approved
     render 'index'
   end
 
@@ -37,6 +42,7 @@ class Admin::GivingBacksController < AdminController
   private
 
   def opportunity_params
-    params.require(:giving_back).permit(:approved, :completed, :hidden)
+    params.require(:giving_back).permit(:approved, :contacted, :hidden, :contacted_by)
   end
+
 end
