@@ -65,7 +65,7 @@
                     <% if @user.user_phones.all.present? %>
                       <% @user.user_phones.all.each do |c| %>
                         <li>
-                          <%= c.type.to_s + ": " +
+                          <%=  c.type.to_s  + ": " +
                               concatenate_phone(c.country_code,
                                                 c.area_code,
                                                 c.prefix,

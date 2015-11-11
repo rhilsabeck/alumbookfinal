@@ -8,23 +8,14 @@
     <p>
       <strong>Name: </strong><br><span style="margin-left:2em"><%= @login.first_name.camelize%> <%= @login.middle_initial.upcase%> <%= @login.last_name.camelize%></span><br>
       <strong>Email: </strong><br><span style="margin-left:2em"><%= @login.email.upcase%></span><br>
-      <strong>Address: </strong><br>
-      <!--Check to make sure address is defined for this user since it's from a different MODEL with foreign key-->
-      <%if (defined? @user)%>
-        <span style="margin-left:2em"><%= @user.street.camelize%></span><br>
-        <span style="margin-left:2em"><%= @user.city.camelize%>, <%= @user.state.camelize%>  <%= @user.zip%></span><br><br>
-      <% else %>
-        <!--if not then display "Not Found"-->
-        <span style="margin-left:2em"><strong>Not Found</strong><br><br><br>
-      <% end %>
 
       <!--Display remaining login details all from LOGIN model-->
-      <strong>Username: </strong><%= @login.username.upcase%><br>
-      <strong>Type: </strong><%= @login.type.upcase%>  <br>
-      <strong>Account Created: </strong><%= @login.created_at.to_s(:date_format)%><br> <!--date_format defined in environment.rb for global use-->
-      <strong>Last Updated: </strong><%= @login.updated_at.to_s(:date_format)%><br>
-      <strong>Last Logged in: </strong><%= @login.last_sign_in_at.to_s(:date_format)%><br>
-      <strong>Number of Logins: </strong><%= @login.sign_in_count.to_s(:date_format)%><br>
+      <strong>Username: </strong><br><span style="margin-left:2em"> <%= @login.username.upcase%></span><br>
+      <strong>Type: </strong><br><span style="margin-left:2em"><%= @login.type.upcase%></span>  <br>
+      <strong>Account Created: </strong><br><span style="margin-left:2em"><%= @login.created_at.to_s(:date_format)%></span><br> <!--date_format defined in environment.rb for global use-->
+      <strong>Last Updated: </strong><br><span style="margin-left:2em"><%= @login.updated_at.to_s(:date_format)%></span><br>
+      <strong>Last Logged in: </strong><br><span style="margin-left:2em"><%= @login.last_sign_in_at.to_s(:date_format)%></span><br>
+      <strong>Number of Logins: </strong><br><span style="margin-left:2em"><%= @login.sign_in_count.to_s(:date_format)%></span><br>
     </p>
   </div>
 </div>

@@ -42,6 +42,12 @@
           <%= f.text_area :description, rows: 6 %>
           <%= errors @opportunity, :description %>
         </li>
+        <% if @opportunity.needs_url? %>
+          <li>
+            <%= f.label :url, 'URL(Optional)' %>
+            <%= f.url_field :url %>
+          </li>
+        <% end %>
       </ol>
       <fieldset>
         <legend>Contact</legend>

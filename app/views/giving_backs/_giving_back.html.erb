@@ -14,6 +14,11 @@
     <h6>Requirements</h6>
     <p class="opportunity-requirements"><%= giving_back.requirements %></p>
     <hr />
+    <% unless giving_back.url.blank? %>
+    <h6>URL</h6>
+        <p><a href= <%= giving_back.url %> target="_blank">More Info</a></p>
+    <hr />
+    <% end %>
     <h6>Contact</h6>
     <p class="opportunity-contact">
       <%= giving_back.contact_full_name %><br />

@@ -72,7 +72,7 @@
                   <i class="fi-check large"></i>
                 <% end %>
               </li>
-            <% else %>
+            <% end %>
             <li>
               <%= link_to admin_giving_back_path(
                   giving_back,
@@ -84,23 +84,30 @@
                 <i class="fi-archive large"></i>
               <% end %>
             </li>
-            <% end %>
           <% end %>
         </ul>
       </div>
   </div>
   <div class="expand">
+    <h6>Description</h6>
     <p class="opportunity-description"><%= giving_back.description %></p>
     <% if giving_back.internship? || giving_back.jobs? %>
       <hr />
       <h6>Requirements</h6>
       <p class="opportunity-requirements"><%= giving_back.requirements %></p>
     <% end %>
+      <hr />
+    <% unless giving_back.url.blank? %>
+    <h6>URL</h6>
+        <p><a href= <%= giving_back.url %> target="_blank">More Info</a></p>
     <hr />
+    <% end %>
     <h6>Contact</h6>
     <p class="opportunity-contact">
       <%= giving_back.contact_full_name %><br />
       <%= mail_to giving_back.contact_email %>
     </p>
+    <hr />
+    <h6>Giving Back submitted by <%= id_to_name giving_back.user_id %>
   </div>
 </div>

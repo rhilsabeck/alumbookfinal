@@ -35,6 +35,10 @@ class GivingBack < ActiveRecord::Base
     internship? || jobs?
   end
 
+  def needs_url?
+    internship? || jobs?
+  end
+
   def contact_full_name
     "#{contact_first_name} #{contact_last_name}"
   end
