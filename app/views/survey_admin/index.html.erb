@@ -1,27 +1,56 @@
-<!View all surveys, publish surveys, create new surveys>
+<% #Created by Ryan Hilsabeck by using giving back template %>
 <div class="row">
-  <div class="large-12 columns">
-    <table>
-      <tr>
-        <th>Status</th>
-        <th>Survey</th>
-        <th>Date Created</th>
-        <th colspan="5"></th>
-      </tr>
-  <% @survey.each do |s| %>
-    <tr>
-      <td><%= s.status %></td>
-      <td><%= s.survey_name%></td>
-      <td><%= s.date_created%></td>
-      <td><%= link_to 'Edit', action: 'edit', :id => s, :survey_id => s %></td>
-      <td><%= link_to 'Publish', action: 'publish',  :id => s%></td>
-
-          </tr>
+  <div class="medium-10 large-8 small-centered columns">
+    <div class="filter-bar">
+      <span class="filter-bar-label">Show:</span>
+      <ul class="filter-bar-filters">
+        <li class="<%= 'active' if current_page?(survey_admin_index_path) %>">
+          <%= link_to 'Unpublished', survey_admin_index_path %>
+        </li>
+        <li class="<%= 'active' if current_page?(published_survey_admin_index_path) %>">
+          <%= link_to 'Published', published_survey_admin_index_path %>
+        </li>
+        <li class="<%= 'active' if current_page?(closed_survey_admin_index_path) %>">
+          <%= link_to 'Closed', closed_survey_admin_index_path %>
+        </li>
+      </ul>
+    </div>
+    <div align="left">
+    <%= link_to 'Create New Survey', {controller: "survey_admin", action: 'new'} %>
+    </div>
+  </br>
+    <% unless @survey.blank? %>
+      <div class="row">
+        <div class="large-12 columns">
+          <table>
+            <tr>
+              <th>Status</th>
+              <th>Survey</th>
+              <th>Date Created</th>
+              <th colspan="5"></th>
+            </tr>
+      <% @survey.each do |survey| %>
+        <tr>
+          <td><%= survey.status %></td>
+          <td><%= survey.survey_name%></td>
+          <td><%= survey.date_created%></td>
+          <% if survey.status == 'unpublished' %>
+            <td><%= link_to 'Edit', action: 'edit', :id => survey, :survey_id => survey %></td>
+            <td><%= link_to 'Publish', action: 'publish',  :id => survey %></td>
+          <% elsif survey.status == 'published' %>
+            <td><%= link_to 'Close', action: 'close',  :id => survey %></td>
+      <% else %>
+        <td></td>
       <% end %>
-    </table><br>
+    </tr>
+            <% end %>
+          </table><br>
           </tr>
-
-    </table><br>
-    <%= link_to 'Create', {controller: "survey_admin", action: 'new'} %>
+        </table><br>
+        </div>
+      </div>
+    <% else %>
+      <%= render 'shared/empty', message: "No surveys" %>
+    <% end %>
   </div>
 </div>

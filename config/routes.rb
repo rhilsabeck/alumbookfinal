@@ -45,6 +45,7 @@ Rails.application.routes.draw do
 
   get 'survey_admin/new_q' => 'survey_admin#new_q'
   get 'survey_admin/publish' => 'survey_admin#publish'
+  get 'survey_admin/close' => 'survey_admin#close'
   post 'report/show' => 'report#show'
 
   post 'report/create' => 'report#create'
@@ -74,7 +75,12 @@ Rails.application.routes.draw do
     delete :avatar, on: :member
   end
   resources :survey_question, :controller => "survey_admin"
-  resources :survey_admin, only: [:new,:new_q, :add, :create, :edit, :index, :choices, :sub_questions,  :survey_question_option]
+  resources :survey_admin, only: [:new,:new_q, :add, :create,  :edit, :choices, :sub_questions,  :survey_question_option] 
+  resources :survey_admin, only: [:index] do
+      get 'published', on: :collection
+      get 'closed', on: :collection
+    end
+
   resources :surveys, only: [:index, :show, :create]
   resources :internships, only: [:index]
   resources :giving_backs, only: [:create] do
@@ -92,6 +98,9 @@ Rails.application.routes.draw do
     end
     resources :accounts
   end
+
+ 
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

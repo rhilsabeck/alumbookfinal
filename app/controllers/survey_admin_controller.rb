@@ -1,12 +1,23 @@
-#SurveyAdminController Created by Jeffrey Mayer
+#SurveyAdminController Created by Jeffrey Mayer, Ryan Hilsabeck added a few more methods
 #Everything related to Survey_Admin was created by Jeffrey Mayer with the
 #Exception of the .js file that Brett did the googling for to find that
 class SurveyAdminController < AuthenticatedController
 #  before_action :survey_question_option, only: [:show, :edit, :update, :destroy]
   #list of all surveys, ability to add new survey, publish survey
   def index
-    @survey = Survey.all rescue nil
+    @survey = Survey.unpublished
   end
+
+  def published
+    @survey = Survey.published
+    render 'index'
+  end
+
+   def closed
+    @survey = Survey.closed
+    render 'index'
+  end
+
   def add
 
   end
@@ -35,18 +46,21 @@ class SurveyAdminController < AuthenticatedController
   def edit
       @survey = Survey.find(params[:id]) rescue nil
       @question = SurveyQuestion.where(survey_id: params[:id]) rescue nil
+  end
 
-
-
-    end
-
-    #publish survey for users to view/take
-    def publish
+  #publish survey for users to view/take
+  def publish
   survey = Survey.find(params[:id]) rescue nil
   survey.update_attributes(status: 'published')
-  redirect_to(survey_admin_index_path)
+  redirect_to(published_survey_admin_index_path)
+  end
 
-end
+    #publish survey for users to view/take
+  def close
+  survey = Survey.find(params[:id]) rescue nil
+  survey.update_attributes(status: 'closed')
+  redirect_to(closed_survey_admin_index_path)
+  end
 
 
 #create methods for form submissions in each view
