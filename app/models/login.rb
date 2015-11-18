@@ -26,6 +26,8 @@ class Login < ActiveRecord::Base
   #Brad Bilter - added to enforce some rules for adding logins
   validates :last_name, :first_name, :middle_initial, :presence => true, :on => :update
 
+  accepts_nested_attributes_for :user
+
   #Joe Sortino - change authentication_keys to allow for username login
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

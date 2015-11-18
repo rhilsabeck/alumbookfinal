@@ -16,6 +16,7 @@ class Admin::AccountsController < AdminController
 
   def new
     @login = Login.new
+    @login.build_user
   end
 
   #Selects existing user by selected ID to display
@@ -27,7 +28,13 @@ class Admin::AccountsController < AdminController
   def create
     @login = Login.new(login_params)
     @login.build_user
-
+    
+    #This is to add status and program to the blank user object
+    profile = login_params.to_h
+    status = profile['user_attributes']['status']
+    program = profile['user_attributes']['program']
+    @login.user.status = status
+    @login.user.program = program
 
     # Test for save successful and react
     if @login.save
@@ -74,7 +81,8 @@ class Admin::AccountsController < AdminController
   #that means you must explicitly specify records
   #to be added
   def login_params
-      params.require(:login).permit(:first_name, :middle_initial, :last_name, :username, :type, :created_at, :updated_at, :last_sign_in_at, :email, :password, :password_confirmation)
+      params.require(:login).permit(:first_name, :middle_initial, :last_name, :username, :type, :created_at, :updated_at, :last_sign_in_at, :email, :password, :password_confirmation,
+      user_attributes: [:status, :program])
   end
 
   #sort column method that prevents sql injection

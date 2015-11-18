@@ -1,4 +1,5 @@
 <!--Use form_for to render form for adding new login details -->
+<!--Ryan Hilsabeck added status and program dropdowns and rearranged email field -->
 <% include_type = false if local_assigns[:include_type].nil? %>
 
 <div class="row">
@@ -17,6 +18,17 @@
   <%= f.text_field :last_name %>
   <%= errors @login, :last_name %>
 </div>
+<div class="<%= error_class @login, :email %>">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+      <%= errors @login, :email %>
+</div>
+<%= f.fields_for :user do |f_user| %>
+    <%= f_user.label :status, 'Status(Student Users Only)' %>
+    <%= f_user.select :status, options_for_select([[ 'Currently Enrolled', 1], ['Alumni', 0 ]],  selected: @login.user.status), include_blank: true %>
+    <%= f_user.label :program, 'Program(Student Users Only)' %>
+    <%= f_user.select :program, options_for_select(["Business Administration","International Business Administration","Education","Leadership Studies","Liberal Studies","Management Information Systems","Web and Internet application"], selected: @login.user.program), include_blank: true %>
+<% end %>
 
 <fieldset>
   <legend>Login</legend>
@@ -27,12 +39,6 @@
         <%= f.select :type, Login.types.map { |w,| [w.humanize, w] }, selected: :user %>
       </li>
     <% end %>
-
-    <li class="<%= error_class @login, :email %>">
-      <%= f.label :email %>
-      <%= f.text_field :email %>
-      <%= errors @login, :email %>
-    </li>
     <li class="<%= error_class @login, :username %>">
       <%= f.label :username %>
       <%= f.text_field :username %>
