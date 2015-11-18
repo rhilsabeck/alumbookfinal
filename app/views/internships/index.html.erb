@@ -1,8 +1,8 @@
 <h1 align="center">Jobs</h1>
-<% unless @jobs.blank? %>
+<% unless @postedJobs.blank? %>
   <div class="row">
     <div class="medium-10 large-8 small-centered columns">
-      <% @jobs.each do |giving_back| %>
+      <% @postedJobs.each do |giving_back| %>
         <%= render giving_back %>
       <% end %>
     </div>
@@ -16,10 +16,10 @@
   </div>
 <% end %>
 <h1 align="center">Internships</h1>
-<% unless @internships.blank? %>
+<% unless @postedInternships.blank? %>
   <div class="row">
     <div class="medium-10 large-8 small-centered columns">
-      <% @internships.each do |giving_back| %>
+      <% @postedInternships.each do |giving_back| %>
         <%= render giving_back %>
       <% end %>
     </div>

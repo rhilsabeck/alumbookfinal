@@ -1,4 +1,4 @@
-<% # Author: Maxwell Barvian %>
+<% # Author: Maxwell Barvian, Ryan Hilsabeck added URL field and Listing time frame field %>
 <h1 class="centered">Submit <%= header_for_giving_back_type(@opportunity.type) %></h1>
 <div class="row">
   <div class="small-10 medium-8 large-6 small-centered columns">
@@ -46,6 +46,12 @@
           <li>
             <%= f.label :url, 'URL(Optional)' %>
             <%= f.url_field :url %>
+          </li>
+        <% end %>
+        <% if @opportunity.needs_archive_date? %>
+          <li>
+            <%= f.label :archive_on, 'Listing Time Frame' %>
+            <%= f.select :archive_on, options_for_select([[ '7 Days', DateTime.now + 7.days], ['14 Days', DateTime.now + 14.days], ['30 Days', DateTime.now + 30.days], ['60 Days', DateTime.now + 60.days]]) %>
           </li>
         <% end %>
       </ol>

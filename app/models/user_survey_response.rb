@@ -1,5 +1,6 @@
 #Created by Tessa, Modified by Victor, Jeff, Max
 class UserSurveyResponse < ActiveRecord::Base
+  acts_as_paranoid
   self.inheritance_column = nil
   belongs_to :user_survey
   belongs_to :survey_question

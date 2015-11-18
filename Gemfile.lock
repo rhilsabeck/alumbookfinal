@@ -109,6 +109,8 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    paranoia (2.1.4)
+      activerecord (~> 4.0)
     pdf-core (0.5.1)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
@@ -217,6 +219,7 @@ DEPENDENCIES
   jquery-ui-rails
   mysql2
   paperclip (~> 4.2)
+  paranoia (~> 2.0)
   prawn
   rails (= 4.2.0)
   rails-jquery-autocomplete

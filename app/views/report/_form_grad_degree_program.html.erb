@@ -1,4 +1,4 @@
-<!-- author: Brett Bush -->
+<!-- author: Brett Bush, Ryan Hilsabeck added drop doens for programs -->
 
 <!-- Graduate Degree Form Render -->
 <%= form_tag("/report/show", method:"post", onsubmit:"report_form_reset()") do %>
@@ -7,7 +7,7 @@
   <p>Make a list of users by their graduate degree program.</p>
 
   <%= label_tag(:program_select, 'Select a program: ') %>
-  <%= select_tag(:program_select, (options_from_collection_for_select(Degree.joins('INNER JOIN graduate_degrees ON graduate_degrees.degree_id = degrees.id').joins('INNER JOIN colleges ON colleges.id = graduate_degrees.college_id').where('colleges.college_name = ?', 'North Central College'), :id, :major_name))) %>
+  <%= select_tag(:program_select, options_for_select(["Business Administration","International Business Administration","Education","Leadership Studies","Liberal Studies","Management Information Systems","Web and Internet application"])) %>
 
   <%= label_tag(:saved_list_type, 'Run report on: ') %>
   <%= select_tag(:saved_list_type, (options_from_collection_for_select(SavedList.where("login_id = ?", current_login.id), :id, :list_name)), {:include_blank => 'All Users'}) %>

@@ -1,5 +1,6 @@
 # Created by Victor, edited by Leiyang Guo and Maxwell Barvian
 class User < ActiveRecord::Base
+  acts_as_paranoid
   # Generates CSV of
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -20,7 +21,7 @@ class User < ActiveRecord::Base
   belongs_to :company
   has_one :saved_lists, through: :saved_list_users
   has_many :saved_list_users, dependent: :destroy
-  has_many :user_surveys
+  has_many :user_surveys, dependent: :destroy
   has_many :surveys, through: :user_surveys
   has_many :giving_backs, dependent: :destroy
   has_many :user_phones, dependent: :destroy
@@ -28,7 +29,7 @@ class User < ActiveRecord::Base
   has_many :graduate_degrees, dependent: :destroy
 
   # PaperClip avatar
-  has_attached_file :avatar, styles: { full: '500x500#', medium: '300x300#', thumb: '100x100#' }, default_url: '/images/profile.svg'
+  has_attached_file :avatar, styles: { full: '500x500#', medium: '300x300#', thumb: '100x100#' }, default_url: '/images/profile.svg', preserver_files: true
 
   #enum status: [ :currently_enrolled, :alumni ]
   enum state: Geography::US_STATES.keys.map { |k| k.to_sym }

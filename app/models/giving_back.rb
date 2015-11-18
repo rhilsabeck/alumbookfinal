@@ -1,5 +1,6 @@
 # Author: Maxwell Barvian
 class GivingBack < ActiveRecord::Base
+  acts_as_paranoid
   self.inheritance_column = nil # Allows the type column to be used without interfering with Rails' conventions
   default_scope { order('created_at DESC') } # Sort by date created in descending order by default
   scope :pending, -> { where(hidden: false, contacted: false, approved: false) }
@@ -7,7 +8,7 @@ class GivingBack < ActiveRecord::Base
   scope :approved, -> {where(approved: true, hidden: false)}
   scope :archived, -> { where(hidden: true) }
 
-  belongs_to :user
+  belongs_to :user 
   belongs_to :company
   enum type: [ :internship, :mentoring, :guest_speaking, :other, :jobs]
 
@@ -36,6 +37,10 @@ class GivingBack < ActiveRecord::Base
   end
 
   def needs_url?
+    internship? || jobs?
+  end
+
+  def needs_archive_date?
     internship? || jobs?
   end
 

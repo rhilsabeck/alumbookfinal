@@ -13,6 +13,7 @@
         <th class="report_results_td" style="white-space: nowrap">Street</th>
         <th class="report_results_td" style="white-space: nowrap">City</th>
         <th class="report_results_td" style="white-space: nowrap">State</th>
+        <th class="report_results_td" style="white-space: nowrap">Program</th>
         <th class="report_results_td" style="white-space: nowrap">Company Name</th>
       </tr>
     </thead>
@@ -23,18 +24,18 @@
 
         <!-- For each user, obtain and display information -->
         <% @users.each do |user| %>
-          <% @login = Login.find(user.login_id) %>
+          <% @login = Login.with_deleted.find(user.login_id) %>
           <% @company = Company.find_by_id(user.company_id) %>
-          <% @user_phones = UserPhone.where('user_id = ?', user.id) %>
+          <% @user_phones = UserPhone.with_deleted.where('user_id = ?', user.id) %>
           <tr>
             <td class="report_results_td"><!-- If there is a login --><% if @login != nil %><%= link_to(@login.username, user_path(user)) %><% end %></td>
             <td class="report_results_td"><!-- If there is a login --><% if @login != nil %><%= @login.first_name %><% end %></td>
-            <td class="report_results_td"><!-- If there is a login --><% if @login != nil %><%= @login.middle_initial %><% end %></td>
             <td class="report_results_td"><!-- If there is a login --><% if @login != nil %><%= @login.last_name %><% end %></td>
             <td class="report_results_td"><!-- If there is a login --><% if @login != nil %><%= @login.email %><% end %></td>
             <td class="report_results_td"><%= user.street %></td>
             <td class="report_results_td"><%= user.city %></td>
             <td class="report_results_td"><%= user.state %></td>
+            <td class="report_results_td"><%= user.program %></td>
             <td class="report_results_td"><!-- If there is a company --><% if @company != nil %><%= @company.company_name %><% end %></td>
           </tr>
         <% end %>

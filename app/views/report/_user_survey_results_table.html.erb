@@ -43,10 +43,10 @@
       <% @users.each do |user| %>
 
         <!-- Obtain this user's login information -->
-        <% @login = Login.find(user.login_id) %>
+        <% @login = Login.with_deleted.find(user.login_id) %>
 
         <!-- Obtain this user's user_survey for this survey -->
-        <% @user_survey = UserSurvey.where('user_id = ? and survey_id = ?', user.id, @survey.id).first %>
+        <% @user_survey = UserSurvey.with_deleted.where('user_id = ? and survey_id = ?', user.id, @survey.id).first %>
         <tr>
           <td class="report_results_td"><!-- If there is a login --><% if @login != nil %><%= link_to(@login.username, user_path(user)) %><% end %></td>
           <td class="report_results_td"><%= @user_survey.date_completed %></td>
@@ -60,14 +60,14 @@
               <% case survey_question.type when "short_answer" %>
 
               <!-- Obtain and display this user's short answer response -->
-                <% @user_survey_response = UserSurveyResponse.where('user_survey_id = ? and survey_question_id = ?', @user_survey.id, survey_question.id) %>
+                <% @user_survey_response = UserSurveyResponse.with_deleted.where('user_survey_id = ? and survey_question_id = ?', @user_survey.id, survey_question.id) %>
                 <% @user_survey_response.each do |user_survey_response| %>
                   <td class="report_results_td"><%= user_survey_response.response_text %></td>
                 <% end %>
 
               <!-- Obtain and display this user's single choice response -->
               <% when "single_choice" %>
-                <% @user_survey_response = UserSurveyResponse.where('user_survey_id = ? and survey_question_id = ?', @user_survey.id, survey_question.id) %>
+                <% @user_survey_response = UserSurveyResponse.with_deleted.where('user_survey_id = ? and survey_question_id = ?', @user_survey.id, survey_question.id) %>
                 <% @user_survey_response.each do |user_survey_response| %>
                   <% @survey_question_option = SurveyQuestionOption.find(user_survey_response.survey_question_option_id) %>
                   <td class="report_results_td"><%= @survey_question_option.text %></td>
@@ -75,7 +75,7 @@
 
               <!-- Obtain and display this user's multiple choice responses -->
               <% when "multi_choice" %>
-                <% @user_survey_responses = UserSurveyResponse.where('user_survey_id = ? and survey_question_id = ?', @user_survey.id, survey_question.id) %>
+                <% @user_survey_responses = UserSurveyResponse.with_deleted.where('user_survey_id = ? and survey_question_id = ?', @user_survey.id, survey_question.id) %>
                 <td class="report_results_td">
                   <% @user_survey_responses.each do |user_survey_response| %>
                     <% @survey_question_option = SurveyQuestionOption.find(user_survey_response.survey_question_option_id) %>
@@ -90,7 +90,7 @@
                 <td class="report_results_td"></td>
                 <% @survey_question_options_choices = SurveyQuestionOptionsChoice.where("survey_question_id = ?", survey_question.id).order('display_order ASC') %>
                 <% @survey_question_options_choices.each do |survey_question_options_choice| %>
-                  <% @user_survey_response = UserSurveyResponse.where('user_survey_id = ? and survey_question_id = ? and survey_question_options_choice_id = ?', @user_survey.id, survey_question.id, survey_question_options_choice.id).first %>
+                  <% @user_survey_response = UserSurveyResponse.with_deleted.where('user_survey_id = ? and survey_question_id = ? and survey_question_options_choice_id = ?', @user_survey.id, survey_question.id, survey_question_options_choice.id).first %>
                   <% @survey_question_option = SurveyQuestionOption.find(@user_survey_response.survey_question_option_id) rescue nil%>
                   <td class="report_results_td"><%= @survey_question_option.text rescue nil %></td>
                 <% end %>

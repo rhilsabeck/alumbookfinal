@@ -9,13 +9,10 @@
       </tr>
   <% @surveys.each do |s|%>
     <tr>
-
-<% if s.status == "published"  %>
       <td><%= s.survey_name%></td>
 
       <td><%= link_to 'take', s %></td>
           </tr>
-      <% end %>
       <% end %>
     </table><br>
           </tr>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111181008) do
+ActiveRecord::Schema.define(version: 20151117034105) do
 
   create_table "colleges", force: :cascade do |t|
     t.string   "college_name", limit: 255
@@ -66,9 +66,12 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.boolean  "hidden",             limit: 1,     default: false
     t.integer  "contacted_by",       limit: 4
     t.string   "url",                limit: 255
+    t.datetime "deleted_at"
+    t.datetime "archive_on"
   end
 
   add_index "giving_backs", ["company_id"], name: "index_giving_backs_on_company_id", using: :btree
+  add_index "giving_backs", ["deleted_at"], name: "index_giving_backs_on_deleted_at", using: :btree
   add_index "giving_backs", ["user_id"], name: "index_giving_backs_on_user_id", using: :btree
 
   create_table "graduate_degrees", force: :cascade do |t|
@@ -79,10 +82,12 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.integer  "status",          limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.datetime "deleted_at"
   end
 
   add_index "graduate_degrees", ["college_id"], name: "index_graduate_degrees_on_college_id", using: :btree
   add_index "graduate_degrees", ["degree_id"], name: "index_graduate_degrees_on_degree_id", using: :btree
+  add_index "graduate_degrees", ["deleted_at"], name: "index_graduate_degrees_on_deleted_at", using: :btree
   add_index "graduate_degrees", ["user_id"], name: "index_graduate_degrees_on_user_id", using: :btree
 
   create_table "logins", force: :cascade do |t|
@@ -103,8 +108,10 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "deleted_at"
   end
 
+  add_index "logins", ["deleted_at"], name: "index_logins_on_deleted_at", using: :btree
   add_index "logins", ["email"], name: "index_logins_on_email", unique: true, using: :btree
   add_index "logins", ["reset_password_token"], name: "index_logins_on_reset_password_token", unique: true, using: :btree
 
@@ -113,8 +120,10 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.integer  "user_id",       limit: 4
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "saved_list_users", ["deleted_at"], name: "index_saved_list_users_on_deleted_at", using: :btree
   add_index "saved_list_users", ["saved_list_id"], name: "index_saved_list_users_on_saved_list_id", using: :btree
   add_index "saved_list_users", ["user_id"], name: "index_saved_list_users_on_user_id", using: :btree
 
@@ -125,8 +134,10 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.date     "date_saved"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "saved_lists", ["deleted_at"], name: "index_saved_lists_on_deleted_at", using: :btree
   add_index "saved_lists", ["login_id"], name: "index_saved_lists_on_login_id", using: :btree
 
   create_table "searchadmins", force: :cascade do |t|
@@ -185,10 +196,12 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.date     "graduation_date"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.datetime "deleted_at"
   end
 
   add_index "undergraduate_degrees", ["college_id"], name: "index_undergraduate_degrees_on_college_id", using: :btree
   add_index "undergraduate_degrees", ["degree_id"], name: "index_undergraduate_degrees_on_degree_id", using: :btree
+  add_index "undergraduate_degrees", ["deleted_at"], name: "index_undergraduate_degrees_on_deleted_at", using: :btree
   add_index "undergraduate_degrees", ["user_id"], name: "index_undergraduate_degrees_on_user_id", using: :btree
 
   create_table "user_phones", force: :cascade do |t|
@@ -201,8 +214,10 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.integer  "user_id",      limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "user_phones", ["deleted_at"], name: "index_user_phones_on_deleted_at", using: :btree
   add_index "user_phones", ["user_id"], name: "index_user_phones_on_user_id", using: :btree
 
   create_table "user_survey_responses", force: :cascade do |t|
@@ -213,8 +228,10 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.text     "response_text",                     limit: 65535
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "user_survey_responses", ["deleted_at"], name: "index_user_survey_responses_on_deleted_at", using: :btree
   add_index "user_survey_responses", ["survey_question_id"], name: "index_user_survey_responses_on_survey_question_id", using: :btree
   add_index "user_survey_responses", ["survey_question_option_id"], name: "index_user_survey_responses_on_survey_question_option_id", using: :btree
   add_index "user_survey_responses", ["survey_question_options_choice_id"], name: "index_user_survey_responses_on_survey_question_options_choice_id", using: :btree
@@ -227,8 +244,10 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.boolean  "anonymous",      limit: 1
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "user_surveys", ["deleted_at"], name: "index_user_surveys_on_deleted_at", using: :btree
   add_index "user_surveys", ["survey_id"], name: "index_user_surveys_on_survey_id", using: :btree
   add_index "user_surveys", ["user_id"], name: "index_user_surveys_on_user_id", using: :btree
 
@@ -263,9 +282,11 @@ ActiveRecord::Schema.define(version: 20151111181008) do
     t.datetime "avatar_updated_at"
     t.date     "birth_day"
     t.string   "program",               limit: 255
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
+  add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
   add_index "users", ["login_id"], name: "index_users_on_login_id", using: :btree
 
   add_foreign_key "company_infos", "companies"

@@ -142,11 +142,11 @@ class ReportController < AuthenticatedController
 
         # Obtain all Users in this NCC program
         if(@saved_list_type == "")
-          @users = User.joins('INNER JOIN graduate_degrees ON graduate_degrees.user_id = users.id').joins('INNER JOIN degrees ON graduate_degrees.degree_id = degrees.id').joins('INNER JOIN colleges ON colleges.id = graduate_degrees.college_id').where('colleges.college_name = ? and degrees.id = ?', 'North Central College', @program_degree_id)
+          @users = User.where('users.program = ?', @program_degree_id)
 
         # Obtain all Users in this NCC program on selected saved list
         else
-          @users = User.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN graduate_degrees ON graduate_degrees.user_id = users.id').joins('INNER JOIN degrees ON graduate_degrees.degree_id = degrees.id').joins('INNER JOIN colleges ON colleges.id = graduate_degrees.college_id').where('colleges.college_name = ? and degrees.id = ?', 'North Central College', @program_degree_id)
+          @users = User.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').where('users.program = ?', @program_degree_id)
         end
       end
 
@@ -178,11 +178,11 @@ class ReportController < AuthenticatedController
 
         # Obtain all Users who have taken a survey
         if(@saved_list_type == "")
-          @users = User.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id')
+          @users = User.with_deleted.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id')
 
         # Obtain all Users who have taken a survey on selected saved list
         else
-          @users = User.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id')
+          @users = User.with_deleted.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id')
         end
 
       # Survey selected
@@ -190,11 +190,11 @@ class ReportController < AuthenticatedController
 
         # Obtain all Users who have taken selected survey
         if(@saved_list_type == "")
-          @users = User.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').where('user_surveys.survey_id = ?', @survey_id)
+          @users = User.with_deleted.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').where('user_surveys.survey_id = ?', @survey_id)
 
         # Obtain all Users who have taken selected survey on selected saved list
         else
-          @users = User.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').where('user_surveys.survey_id = ?', @survey_id)
+          @users = User.with_deleted.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').where('user_surveys.survey_id = ?', @survey_id)
         end
       end
 
@@ -206,11 +206,11 @@ class ReportController < AuthenticatedController
 
       # Obtain all Users who have given back
       if(@saved_list_type == "")
-        @users = User.joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.completed = ?', true)
+        @users = User.with_deleted.joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.contacted = ? OR giving_backs.approved = ?', true, true)
 
       # Obtain all Users who have given back on selected saved list
       else
-        @users = User.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.completed = ?', true)
+        @users = User.with_deleted.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.contacted = ? OR giving_backs.approved = ?', true, true)
       end
 
     # (7) Survey Results
@@ -224,7 +224,7 @@ class ReportController < AuthenticatedController
       @survey_questions = SurveyQuestion.where('survey_id = ?', @survey.id).order('display_order ASC')
 
       # Obtain all Users who have taken this survey
-      @users = User.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').where('user_surveys.survey_id = ?', @survey_id)
+      @users = User.with_deleted.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').where('user_surveys.survey_id = ?', @survey_id)
 
     # (8) User Survey Results
     when "8"
@@ -239,7 +239,7 @@ class ReportController < AuthenticatedController
       @survey_questions = SurveyQuestion.where('survey_id = ?', @survey.id).order('display_order ASC')
 
       # Obtain all Users who have taken this survey
-      @users = User.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').joins('INNER JOIN logins ON logins.id = users.login_id').where('user_surveys.survey_id = ? and logins.username = ?', @survey_id, @username)
+      @users = User.with_deleted.joins('INNER JOIN user_surveys ON user_surveys.user_id = users.id').joins('INNER JOIN logins ON logins.id = users.login_id').where('user_surveys.survey_id = ? and logins.username = ?', @survey_id, @username)
 
     # (?) Unknown Report
     else

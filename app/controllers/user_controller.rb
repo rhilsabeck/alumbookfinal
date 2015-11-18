@@ -50,7 +50,7 @@ class UserController < AuthenticatedController
   end
 
   def avatar
-    @user = User.find(params[:id])
+    @user = User.with_deleted.find(params[:id])
     @user.avatar = nil
     @user.save
 

@@ -2,6 +2,7 @@
 #Modified by Joe Sortino
 
 class Login < ActiveRecord::Base
+  acts_as_paranoid
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable :registerable,
 
