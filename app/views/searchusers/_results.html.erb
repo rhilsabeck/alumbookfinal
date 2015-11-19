@@ -2,5 +2,6 @@
 With minimal assistance and advice with James Maher
 Partial for basic search result-->
 <%= content_tag :table do %>
-  <%= content_tag :tbody, display_basic_search_results(@searchusers), nil, false %>
+  <%= content_tag :thead, display_sort_column_headers(@search), nil, false %>
+  <%= content_tag :tbody, display_search_results(@searchusers), nil, false %>
 <% end %>

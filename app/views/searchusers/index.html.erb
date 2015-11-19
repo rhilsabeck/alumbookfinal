@@ -1,27 +1,35 @@
-<!--Created by Leiyang Guo
+<!--Created by Leiyang Guo(a few additions by Ryan Hilsabeck)
 With minimal assistance and advice with James Maher
-Using foundation 5 and Ransack basic search form-->
+Using Foundation 5 and Ransack advanced search form-->
 <br /><br/>
 <div class="row panel radius">
   <div class="small-12 medium-12 large-12 column">
 <div align="center">
-  <h1>User Search</h1>
-  <p>Search other users by first name,last name, or by graduate program</p>
+  <h1>Advanced Search</h1>
 <hr/><br /><br/>
 <%= search_form_for @search, url: search_searchusers_path, html: { method: :post } do |f| %>
+  
+    <%= f.condition_fields do |c| %>
+      <%= render "condition_fields", f: c %>
+    <% end %>
+    
+  <!--Button for add condition, association type "or"-->
+  <p>
     <div class="row">
-        <div align= "center" class="large-12 small-12 columns">
-          <%= f.text_field :first_name_or_last_name_cont %>
+        <div class="large-12 small-12 columns">
+            <%= link_to_add_fields "Add Conditions", f, :condition, class: "small round button" %>
         </div>
     </div>
+  </p>
+  
   <div class="row">
     <div  align ="center" class="large-12 small-12 columns">
       <%= f.submit "search", :class => "round button" %>
     </div>
   </div>
 <% end %>
-  
-<!--Render basic search result-->
+
+<!--Partial to result, Ryan Hilsabeck added new save list partial from alumbook2-->
 <% if @showResult == true %>
     <%= render 'results' %>
 <% end %>

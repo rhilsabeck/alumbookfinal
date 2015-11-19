@@ -19,7 +19,7 @@ class SearchadminsController < ApplicationController
     
     # Check database for a match
     @search = Login.search(params[:q])
-    @searchadmin = @search.result
+    @searchadmin = @search.result.includes(:user)
     @search.build_condition if @search.conditions.empty?
     
     @search_array = Array.new

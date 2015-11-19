@@ -18,12 +18,12 @@ Rails.application.routes.draw do
     collection { post :search, to: 'searchadmins#index'}
   end
 
-  get 'searchusers/index' => 'searchusers#index'
+  get 'searchusers/index'  
 
-  resources :searchusers do
-    collection do
-      match 'search' => 'searchusers#search', :via => [:get, :post], :as => :search
-    end
+ resources :searchusers do
+
+       collection { post :search, to: 'searchusers#index'}
+
   end
 
   get 'privacy' => 'privacy#index'

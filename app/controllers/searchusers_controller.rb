@@ -20,14 +20,10 @@ class SearchusersController < ApplicationController
     #@search = Login.joins('LEFT OUTER JOIN users ON users.login_id = logins.id').search(params[:q])
     
     #uncomment code below if searchable attribute is FUNCTIONAL
-    @search = Login.joins('LEFT OUTER JOIN users ON users.login_id = logins.id').where("users.general_opt_in = 1").ransack(params[:q])
-    
-    @searchusers = @search.result
+    #@search = Login.joins('LEFT OUTER JOIN users ON users.login_id = logins.id').where("users.general_opt_in = 1").search(params[:q])
+    @search =Login.joins(:user).search(params[:q])
+    @searchusers = @search.result.where('general_opt_in = 1')
   end
   
-  # Call back to index action and render on index.html.erb
-  def search
-    index
-    render :index
-  end
+
 end

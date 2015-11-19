@@ -4,5 +4,6 @@ class Company < ActiveRecord::Base
 
   validates :company_name, presence: true, uniqueness: { case_sensitive: false }
 
+
   accepts_nested_attributes_for :company_info
 end

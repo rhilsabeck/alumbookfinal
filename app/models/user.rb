@@ -12,13 +12,14 @@ class User < ActiveRecord::Base
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ['program', 'company_id']
+    ['program']
   end
 
   # Leiyang Guo and Victor Bashorun set association
 
   belongs_to :login
   belongs_to :company
+  belongs_to :company_info
   has_one :saved_lists, through: :saved_list_users
   has_many :saved_list_users, dependent: :destroy
   has_many :user_surveys, dependent: :destroy
