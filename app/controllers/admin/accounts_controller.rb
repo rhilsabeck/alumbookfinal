@@ -49,6 +49,12 @@ class Admin::AccountsController < AdminController
   # Updates selected user received on submit from edit
   def update
     @login = Login.find(params[:id])
+    #added this to update to update user model attributes
+    profile = login_params.to_h
+    status = profile['user_attributes']['status']
+    program = profile['user_attributes']['program']
+    @login.user.status = status
+    @login.user.program = program
 
     #Test for save successful and react
     if @login.update(login_params.to_h.deep_reject { |k, v| ['password', 'password_confirmation'].include?(k) && v.blank? })
@@ -82,7 +88,7 @@ class Admin::AccountsController < AdminController
   #to be added
   def login_params
       params.require(:login).permit(:first_name, :middle_initial, :last_name, :username, :type, :created_at, :updated_at, :last_sign_in_at, :email, :password, :password_confirmation,
-      user_attributes: [:status, :program])
+      user_attributes: [:id,:status, :program])
   end
 
   #sort column method that prevents sql injection
