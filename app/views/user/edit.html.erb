@@ -111,22 +111,18 @@
 
           <fieldset>
             <legend>Personal Information</legend>
-          <div class="row">
-            <div class="medium-6 columns">
-              <div class="row">
-                <div class="medium-6 columns">
-                  <%= f.label 'Birthday' %>
-                  <%= f.text_field :birth_day,:class => 'datepicker' %>
-                </div>
+            <div class="row"> 
+              <div class="medium-10 columns">
+                  <%= f.label :birth_day, "Birthday" %>
+                  <%= f.date_select :birth_day, {order: [:month, :day, :year], include_blank: true, start_year: 1920}, {class: "date-select"}  %>
               </div>
             </div>
-            <div class="medium-6 columns">
-            <div class="medium-6 columns">
+            <div class="row">
+              <div class="medium-6 columns">
               <%= f.label :ethnicity %>
               <%= f.text_field :ethnicity %>
             </div>
-          </div>
-          </div>
+            </div>
         </fieldset>
 
 
@@ -214,11 +210,11 @@
           <fieldset>
             <legend>Employment Information</legend>
           <div class="row">
-            <div class="medium-5 columns">
+            <div class="medium-6 columns">
               <%= f.label :job_title %>
               <%= f.text_field :job_title %>
             </div>
-            <div class="medium-4 columns">
+            <div class="medium-6 columns">
               <%= f.label :salary_range %>
               <%= f.select :salary_range, options_for_select([["< $ 49,000", 0],
                                                         ["$ 50,000 to $ 99,000", 1],
@@ -227,11 +223,13 @@
                                                         ["> $ 200,000", 4]],
                                                         selected: @user.try(:salary_range)), include_blank: true %>
             </div>
-            <div class="medium-3 columns">
-              <%= f.label :start_date %>
-              <%= f.datetime_field :start_date,:id => "datepicker"  %>
-            </div>
           </div>
+            <div class="row">
+            <div class="medium-7 columns">
+              <%= f.label :start_date %>
+              <%= f.date_select :start_date, {order: [:month, :day, :year], include_blank: true, start_year: 1920}, {class: "date-select"}  %>
+            </div>
+            </div>
          </fieldset>
 
           <fieldset>

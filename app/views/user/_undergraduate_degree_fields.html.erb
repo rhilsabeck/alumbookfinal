@@ -24,8 +24,8 @@
       </div>
 
       <div class="medium-5 columns">
-        <%= f.label :graduation_date %>
-        <%= f.text_field :graduation_date,:class => 'datepicker' %>
+        <%= f.label :graduation_date, "Graduation Year" %>
+        <%= f.date_select :graduation_date, {discard_day: true, discard_month: true, include_blank: true, start_year: 1920}, {}  %>
       </div>
     </div>
   </div>
