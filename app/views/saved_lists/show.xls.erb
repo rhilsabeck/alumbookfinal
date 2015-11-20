@@ -16,9 +16,11 @@
         <Cell><Data ss:Type="String">Middle Initial</Data></Cell>
         <Cell><Data ss:Type="String">Last Name</Data></Cell>
         <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">Phone</Data></Cell>
         <Cell><Data ss:Type="String">Street</Data></Cell>
         <Cell><Data ss:Type="String">City</Data></Cell>
         <Cell><Data ss:Type="String">State</Data></Cell>
+        <Cell><Data ss:Type="String">Program</Data></Cell>
         <Cell><Data ss:Type="String">Company Name</Data></Cell>
       </Row>
 
@@ -36,9 +38,18 @@
             <Cell><Data ss:Type="String"><!-- If there is a login --><% if @login != nil %><%= @login.middle_initial %><% end %></Data></Cell>
             <Cell><Data ss:Type="String"><!-- If there is a login --><% if @login != nil %><%= @login.last_name %><% end %></Data></Cell>
             <Cell><Data ss:Type="String"><!-- If there is a login --><% if @login != nil %><%= @login.email %><% end %></Data></Cell>
+            <Cell><Data ss:Type="String"><!-- If there is a company --><% if @user_phones != nil %>
+                 <% @user_phones.all.each do |c| %>     
+                          <%=  c.type.to_s  + ": " +
+                              concatenate_phone(c.country_code,
+                                                c.area_code,
+                                                c.prefix,
+                                                c.suffix)%>   
+                      <% end %> <% end %></Data></Cell>              
             <Cell><Data ss:Type="String"><%= user.street %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.city %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.state %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= user.program %></Data></Cell>
             <Cell><Data ss:Type="String"><!-- If there is a company --><% if @company != nil %><%= @company.company_name %><% end %></Data></Cell>
           </Row>
         <% end %>

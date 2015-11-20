@@ -21,6 +21,7 @@
             <th class="saved_list_td" style="white-space: nowrap">First Name</th>
             <th class="saved_list_td" style="white-space: nowrap">Last Name</th>
             <th class="saved_list_td" style="white-space: nowrap">Email</th>
+            <th class="saved_list_td" style="white-space: nowrap">Phone</th>
             <th class="saved_list_td" style="white-space: nowrap">Street</th>
             <th class="saved_list_td" style="white-space: nowrap">City</th>
             <th class="saved_list_td" style="white-space: nowrap">State</th>
@@ -44,6 +45,16 @@
                 <td class="saved_list_td"><!-- If there is a login --><% if @login != nil %><%= @login.first_name %><% end %></td>
                 <td class="saved_list_td"><!-- If there is a login --><% if @login != nil %><%= @login.last_name %><% end %></td>
                 <td class="saved_list_td"><!-- If there is a login --><% if @login != nil %><%= @login.email %><% end %></td>
+                <td class="saved_list_td"><!-- If there is a company --><% if @user_phones != nil %>
+                 <% @user_phones.all.each do |c| %>
+                        <li>     
+                          <%=  c.type.to_s  + ": " +
+                              concatenate_phone(c.country_code,
+                                                c.area_code,
+                                                c.prefix,
+                                                c.suffix)%> 
+                        </li>
+                      <% end %> <% end %></td>
                 <td class="saved_list_td"><%= user.street %></td>
                 <td class="saved_list_td"><%= user.city %></td>
                 <td class="saved_list_td"><%= user.state %></td>
