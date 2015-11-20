@@ -82,7 +82,9 @@ Rails.application.routes.draw do
     end
 
   resources :surveys, only: [:index, :show, :create]
-  resources :internships, only: [:index]
+  resources :internships, only: [:index] do
+    get 'internship', on: :collection
+  end
   resources :giving_backs, only: [:create] do
     get :autocomplete_company_name, :on => :collection
     new do

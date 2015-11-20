@@ -1,35 +1,23 @@
-<h1 align="center">Jobs</h1>
-<% unless @postedJobs.blank? %>
-  <div class="row">
-    <div class="medium-10 large-8 small-centered columns">
-      <% @postedJobs.each do |giving_back| %>
-        <%= render giving_back %>
+<div class="row">
+  <div class="medium-10 large-8 small-centered columns">
+    <div class="filter-bar">
+      <span class="filter-bar-label">Show:</span>
+      <ul class="filter-bar-filters">
+        <li class="<%= 'active' if current_page?(internships_path) %>">
+          <%= link_to 'Jobs', internships_path %>
+        </li>
+        <li class="<%= 'active' if current_page?(internship_internships_path) %>">
+          <%= link_to 'Internships', internship_internships_path %>
+        </li>
+      </ul>
+    </div>
+    <% unless @opportunities.blank? %>
+      <% @opportunities.each do |giving_back| %>
+        <%= render :partial => 'board', :locals => {:giving_back => giving_back} %>
       <% end %>
-    </div>
+    <% else %>
+      <%= render 'shared/empty', message: "No opportunities." %>
+    <% end %>
   </div>
-<% else %>
-  <% @vcenter = true %>
-  <div class="row">
-    <div class="small-12 columns">
-      <%= render 'shared/empty', message: "No jobs." %>
-    </div>
-  </div>
-<% end %>
-<h1 align="center">Internships</h1>
-<% unless @postedInternships.blank? %>
-  <div class="row">
-    <div class="medium-10 large-8 small-centered columns">
-      <% @postedInternships.each do |giving_back| %>
-        <%= render giving_back %>
-      <% end %>
-    </div>
-  </div>
-<% else %>
-  <% @vcenter = true %>
-  <div class="row">
-    <div class="small-12 columns">
-      <%= render 'shared/empty', message: "No internships." %>
-    </div>
-  </div>
-<% end %>
+</div>
 

@@ -2,11 +2,14 @@
 # Ryan Hilsabeck added methods to see if internship/job has past it's archive date and to archive it
 class InternshipsController < AuthenticatedController
   def index
-    #@allInternships = GivingBack.internship.where(approved: true, hidden: false)
-    @postedInternships = archive_internship
-    #@allJobs = GivingBack.jobs.where(approved: true, hidden: false)
-    @postedJobs = archive_job
+    @opportunities = archive_job
   end
+
+  def internship
+    @opportunities = archive_internship
+    render 'index'
+  end
+
 
   private
 

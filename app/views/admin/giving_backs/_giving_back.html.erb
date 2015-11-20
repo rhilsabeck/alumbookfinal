@@ -1,6 +1,9 @@
 <% # Author: Maxwell Barvian and Ryan Hilsabeck(additions of approved and contacted) %>
 <div class="opportunity panel radius" data-expandable>
   <div class="pack pack-middle">
+    <%= link_to giving_back.user, class: 'pack-item opportunity-avatar' do %>
+      <%= image_tag giving_back.user.avatar.url(:thumb) %>
+    <% end %>
     <div class="pack-item">
       <% unless giving_back.internship? || giving_back.jobs? %>
         <h5><%= giving_back.subject %></h5>
