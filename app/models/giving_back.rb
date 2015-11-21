@@ -2,7 +2,7 @@
 class GivingBack < ActiveRecord::Base
   acts_as_paranoid
   self.inheritance_column = nil # Allows the type column to be used without interfering with Rails' conventions
-  default_scope { order('created_at DESC') } # Sort by date created in descending order by default
+  default_scope { order(created_at: :desc, type: :asc) } # Sort by date created in descending order by default
   scope :pending, -> { where(hidden: false, contacted: false, approved: false) }
   scope :contacted, -> { where(contacted: true, hidden: false) }
   scope :approved, -> {where(approved: true, hidden: false)}

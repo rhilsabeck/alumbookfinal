@@ -9,26 +9,24 @@
         <%= f_college.text_field :college_name %>
 <% end %>
       </div>
+    </div>
+    <div class="row">
       <div class="medium-5 columns">
-<% f.object.build_degree unless f.object.degree %>
-<%= f.fields_for :degree do |f_degree| %>
+        <% f.object.build_degree unless f.object.degree %>
+        <%= f.fields_for :degree do |f_degree| %>
         <%= f_degree.label :major_name %>
         <%= f_degree.text_field :major_name %>
       </div>
-    </div>
-    <div class="row">
-      <div class="medium-4 columns">
+      <div class="medium-7 columns">
         <%= f_degree.label :type, 'Degree' %>
         <%= f_degree.select :type, Degree.graduate_types.map { |w,| [Degree.humanize_type(w), w] } %>
-<% end %>
+      <% end %>
       </div>
-      <div class="medium-4 columns">
-        <%= f.label :status %>
-        <%= f.select :status, GraduateDegree.statuses.map { |w,| [w.humanize, w] } %>
-      </div>
-      <div class="medium-4 columns">
-        <%= f.label :graduation_date, "Graduation Year" %>
-        <%= f.date_select :graduation_date, {discard_day: true, discard_month: true, include_blank: true, start_year: 1920}, {}  %>
+    </div>
+    <div class="row">
+      <div class="medium-12 columns">
+        <%= f.label :graduation_date %>
+        <%= f.date_select :graduation_date, {order: [:month, :year],discard_day: true, include_blank: true, start_year: 1920}, {class: "date-select"}  %>
       </div>
     </div>
   </div>

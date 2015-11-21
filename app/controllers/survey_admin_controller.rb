@@ -2,19 +2,22 @@
 #Everything related to Survey_Admin was created by Jeffrey Mayer with the
 #Exception of the .js file that Brett did the googling for to find that
 class SurveyAdminController < AuthenticatedController
+
+  #Helper methods for sorting
+  helper_method :sort_column, :sort_direction
 #  before_action :survey_question_option, only: [:show, :edit, :update, :destroy]
   #list of all surveys, ability to add new survey, publish survey
   def index
-    @survey = Survey.unpublished
+    @survey = Survey.order(sort_column + " " + sort_direction).where(status: 'unpublished')
   end
 
   def published
-    @survey = Survey.published
+    @survey = Survey.order(sort_column + " " + sort_direction).where(status: 'published')
     render 'index'
   end
 
    def closed
-    @survey = Survey.closed
+    @survey = Survey.order(sort_column + " " + sort_direction).where(status: 'closed')
     render 'index'
   end
 
@@ -134,6 +137,22 @@ end
   end
   def sub_params
     params.require(:survey_question_options_choices).permit(:survey_question_id, :display_order, :text)
+  end
+
+
+    #sort column method that prevents sql injection
+  #by only allowing sort columns to be received
+  #from column headers ***railscast episode 228
+  def sort_column
+      Survey.column_names.include?(params[:sort]) ? params[:sort] : "date_created"
+  end
+
+  #sort direction method that prevents sql
+  #injection by only allowing asc or desc
+  #options to be passed for sort direction.
+  #***railscast episode 228
+  def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 

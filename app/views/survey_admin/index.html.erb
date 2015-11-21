@@ -22,11 +22,11 @@
     <% unless @survey.blank? %>
       <div class="row">
         <div class="large-12 columns">
-          <table>
+          <table class="sortable">
             <tr>
-              <th>Status</th>
-              <th>Survey</th>
-              <th>Date Created</th>
+              <th><%= sortable "status", "Status" %></th>
+              <th><%= sortable "survey_name", "Survey" %></th>
+              <th><%= sortable "date_created", "Date Created" %></th>
               <th colspan="5"></th>
             </tr>
       <% @survey.each do |survey| %>

@@ -76,7 +76,7 @@
                     <% end %>
                   </ul>
                 </p>
-                <p><b>Birth Date:</b> <%= @user.try(:birth_day) %></p>
+                <p><b>Birth Date:</b> <%= @user.try(:birth_day).strftime("%m-%d-%Y") %></p>
                 <p><b>Ethnicity:</b> <%= @user.try(:ethnicity) %></p>
                 <p><b>Spouse Name:</b> <%= @user.try(:spouse_first_name) %>
                                <%= @user.try(:spouse_middle_initial) %>
@@ -96,7 +96,7 @@
                         <%= convert_degree_type(ud.degree.type) %>
                             <%= ud.degree.major_name %> from
                             <%= ud.college.college_name %> in
-                            <%= ud.graduation_date %>
+                            <%= ud.graduation_date.strftime("%B %Y") %>
                       </li>
                       <% end %>
                     <% end %>
@@ -106,7 +106,7 @@
                         <%= convert_degree_type(gd.degree.type) %>
                             <%= gd.degree.major_name %> from
                             <%= gd.college.college_name %> in
-                            <%= gd.graduation_date %>
+                            <%= gd.graduation_date.strftime("%B %Y") %>
                       </li>
                       <% end %>
                     <% end %>
@@ -137,7 +137,7 @@
                 </p>
                 <% end %>
                 <p><b>Salary Range:</b> <%= @user.salary_range.present? ? convert_salary_range_to_words(@user.salary_range) : "" %></p>
-                <p><b>Start Date:</b> <%= @user.present? ? @user.start_date : "" %><br>
+                <p><b>Start Date:</b> <%= @user.present? ? @user.start_date.strftime("%m-%d-%Y") : "" %><br>
                 </p>
         </section>
       </div>
