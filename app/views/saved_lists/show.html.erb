@@ -46,15 +46,15 @@
                 <td class="saved_list_td"><!-- If there is a login --><% if @login != nil %><%= @login.last_name %><% end %></td>
                 <td class="saved_list_td"><!-- If there is a login --><% if @login != nil %><%= @login.email %><% end %></td>
                 <td class="saved_list_td"><!-- If there is a company --><% if @user_phones != nil %>
-                 <% @user_phones.all.each do |c| %>
-                        <li>     
-                          <%=  c.type.to_s  + ": " +
-                              concatenate_phone(c.country_code,
-                                                c.area_code,
-                                                c.prefix,
-                                                c.suffix)%> 
-                        </li>
-                      <% end %> <% end %></td>
+                  <% @user_phones.all.each do |c| %>   
+                  <b> <%=  c.type.to_s  + ": "  %></b>
+                    <%= concatenate_phone(c.country_code,
+                                         c.area_code,
+                                         c.prefix,
+                                         c.suffix)%> 
+                    <% end %>
+                  <% end %>
+                </td>
                 <td class="saved_list_td"><%= user.street %></td>
                 <td class="saved_list_td"><%= user.city %></td>
                 <td class="saved_list_td"><%= user.state %></td>

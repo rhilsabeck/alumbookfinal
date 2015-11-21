@@ -13,6 +13,7 @@ class ReportController < AuthenticatedController
     # Obtain the selected report id and name of index.html.erb form
     @report_id = params[:report_id]
     @report_name = params[:report_name]
+    @saved_list_array = Login.find(current_login.id).saved_lists
 
     # Switch case by report_id
     case @report_id
@@ -206,11 +207,11 @@ class ReportController < AuthenticatedController
 
       # Obtain all Users who have given back
       if(@saved_list_type == "")
-        @users = User.with_deleted.joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.contacted = ? OR giving_backs.approved = ?', true, true)
+        @users = User.with_deleted.joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.contacted = ? OR giving_backs.approved = ?', true, true).distinct
 
       # Obtain all Users who have given back on selected saved list
       else
-        @users = User.with_deleted.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.contacted = ? OR giving_backs.approved = ?', true, true)
+        @users = User.with_deleted.joins('INNER JOIN saved_list_users ON saved_list_users.user_id = users.id').joins('INNER JOIN giving_backs ON giving_backs.user_id = users.id').where('giving_backs.contacted = ? OR giving_backs.approved = ?', true, true).distinct
       end
 
     # (7) Survey Results
