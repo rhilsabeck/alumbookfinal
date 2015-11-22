@@ -1,0 +1,16 @@
+<!Create the answers for multiple choice/single choice questions>
+<div class="row">
+  <div class="large-12 columns">
+  <h1>Add Response Options</h1>
+
+
+	<% count = 0 %>
+  	<% @options.each do |q| %>
+  		<% count = count + 1 %>
+  		<tr>
+    	<td><%= q.text %></td><br>
+    <%end%>
+</br>
+    <%=link_to "Back to survey", action: 'edit', :id => @question.survey_id %>
+  </div>
+ </div>

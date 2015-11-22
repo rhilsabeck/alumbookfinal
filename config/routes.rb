@@ -33,6 +33,8 @@ Rails.application.routes.draw do
 
   get 'survey_admin/edit' => 'survey_admin#edit'
   post 'survey_admin/edit' => 'survey_admin#edit'
+  get 'survey_admin/view_choices' => 'survey_admin#view_choices'
+  get 'survey_admin/view_sub_questions' => 'survey_admin#view_sub_questions'
   get 'survey_admin/choices' => 'survey_admin#choices'
   post 'survey_admin/choices' => 'survey_admin#choices'
   get 'survey_admin/sub_questions' => 'survey_admin/sub_questions'

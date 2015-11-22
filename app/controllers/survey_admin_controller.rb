@@ -36,11 +36,23 @@ class SurveyAdminController < AuthenticatedController
     @question = SurveyQuestion.find(params[:id])
     @options = SurveyQuestionOption.where(survey_question_id: params[:id]) rescue nil
   end
+
+  def view_choices
+    @question = SurveyQuestion.find(params[:id])
+    @options = SurveyQuestionOption.where(survey_question_id: params[:id]) rescue nil
+  end
+
   #sub questions for multi_question
   def sub_questions
     @question = SurveyQuestion.find(params[:id])
     @sub = SurveyQuestionOptionsChoice.where(survey_question_id: params[:id]) rescue nil
   end
+
+  def view_sub_questions
+    @question = SurveyQuestion.find(params[:id])
+    @sub = SurveyQuestionOptionsChoice.where(survey_question_id: params[:id]) rescue nil
+  end
+
 
 
   def new

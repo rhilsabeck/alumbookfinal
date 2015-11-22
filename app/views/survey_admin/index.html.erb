@@ -27,6 +27,7 @@
               <th><%= sortable "status", "Status" %></th>
               <th><%= sortable "survey_name", "Survey" %></th>
               <th><%= sortable "date_created", "Date Created" %></th>
+              <th><%= sortable "login_id", "Created By" %></th>
               <th colspan="5"></th>
             </tr>
       <% @survey.each do |survey| %>
@@ -34,13 +35,14 @@
           <td><%= survey.status %></td>
           <td><%= survey.survey_name%></td>
           <td><%= survey.date_created%></td>
+          <td><%= id_to_name survey.login_id%></td>
           <% if survey.status == 'unpublished' %>
             <td><%= link_to 'Edit', action: 'edit', :id => survey, :survey_id => survey %></td>
             <td><%= link_to 'Publish', action: 'publish',  :id => survey %></td>
           <% elsif survey.status == 'published' %>
             <td><%= link_to 'Close', action: 'close',  :id => survey %></td>
-      <% else %>
-        <td></td>
+          <% else %>
+          <td><%= link_to 'View', action: 'edit',  :id => survey, :survey_id => survey %></td>
       <% end %>
     </tr>
             <% end %>

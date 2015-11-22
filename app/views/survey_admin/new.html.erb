@@ -24,8 +24,10 @@
 
   <%= f.hidden_field :status, value: "unpublished" %>
   
+</p>
+<p>
 
-
+  <%= f.hidden_field :login_id,  value: current_login.id %>
 </p>
   <%= f.submit "Submit", :class => "round button" %>
 <% end %>

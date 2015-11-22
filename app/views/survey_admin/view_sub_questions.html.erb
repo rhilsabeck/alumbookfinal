@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="large-12 columns">
+  <h1>View Sub Questions</h1>
+
+
+	<% count = 0 %>
+  	<% @sub.each do |q| %>
+  		<% count = count + 1 %>
+  		<tr>
+    	<td><%= q.text %></td><br>
+
+	<%end%>
+</br>
+  <%=link_to "Back to survey", action: 'edit', :id => @question.survey_id %>
+  </div>
+  
+</div>

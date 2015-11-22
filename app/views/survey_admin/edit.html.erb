@@ -13,15 +13,22 @@
       <tr>
         <td><%= q.text %></td>
         <td><%= q.type%></td>
+        <% if @survey.status == 'closed' %>
+          <% if q.type!='short_answer' %>
+          <td><%= link_to 'Response Options', action: 'view_choices', :id => q.id %></td>
+          <%end%>
+          <% if q.type=='sub_questions' %>
+          <td><%= link_to 'Sub Questions', action: 'view_sub_questions', :id => q.id %> </td>
+          <% end %>
+        <% else %>
         <td><%= link_to 'Delete', q, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% if q.type!='short_answer' %>
           <td><%= link_to 'Response Options', action: 'choices', :id => q.id %></td>
           <%end%>
           <% if q.type=='sub_questions' %>
           <td><%= link_to 'Sub Questions', action: 'sub_questions', :id => q.id %> </td>
-
           <%end%>
-
+         <% end %>
 
 
       </tr>
@@ -43,5 +50,8 @@
 
 
 
-
+    <% if @survey.status == 'closed' %>
+    <%= link_to "Back to closed surveys", "/survey_admin/closed", :class => "button small" %>
+    <% else %>
     <%= link_to 'New Question', {controller: "survey_admin", action: 'new_q', :id => @survey, :display_order => @count} %>
+    <% end %>
