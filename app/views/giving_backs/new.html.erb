@@ -1,5 +1,10 @@
 <% # Author: Maxwell Barvian, Ryan Hilsabeck added URL field and Listing time frame field %>
-<h1 class="centered">Submit <%= header_for_giving_back_type(@opportunity.type) %></h1>
+<h1 class="centered"><%= header_for_giving_back_type(@opportunity.type) %></h1>
+<div class="row">
+  <div class="small-10 medium-8 large-6 small-centered columns">
+     <p><%= blurb_for_giving_back_type(@opportunity.type) %></p>
+  </div>
+</div>
 <div class="row">
   <div class="small-10 medium-8 large-6 small-centered columns">
     <div class="panel">
@@ -9,6 +14,13 @@
         <% if @opportunity.needs_subject? %>
           <li class="<%= error_class @opportunity, :subject %>">
             <%= f.label :subject %>
+            <%= f.text_field :subject %>
+            <%= errors @opportunity, :subject %>
+          </li>
+        <% end %>
+        <% if @opportunity.needs_different_subject? %>
+          <li class="<%= error_class @opportunity, :subject %>">
+            <%= f.label :subject, "Area of expertise" %>
             <%= f.text_field :subject %>
             <%= errors @opportunity, :subject %>
           </li>
@@ -32,16 +44,24 @@
         <% end %>
         <% if @opportunity.needs_requirements? %>
           <li class="<%= error_class @opportunity, :requirements %>">
-            <%= f.label :requirements %>
+            <%= f.label :requirements, "Requirements and educational background" %>
             <%= f.text_area :requirements, rows: 6 %>
             <%= errors @opportunity, :requirements %>
           </li>
         <% end %>
+        <% if @opportunity.mentor_changes? %>
+          <li class="<%= error_class @opportunity, :description %>">
+            <%= f.label :description, "Professional background and availability" %>
+            <%= f.text_area :description, rows: 6 %>
+            <%= errors @opportunity, :description %>
+          </li>
+        <% else %>
         <li class="<%= error_class @opportunity, :description %>">
           <%= f.label :description %>
           <%= f.text_area :description, rows: 6 %>
           <%= errors @opportunity, :description %>
         </li>
+        <% end %>
         <% if @opportunity.needs_url? %>
           <li>
             <%= f.label :url, 'URL(Optional)' %>

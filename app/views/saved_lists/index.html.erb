@@ -20,7 +20,7 @@
         <% @saved_lists.each do |saved_list| %>
           <tr>
             <td><%= saved_list.list_name %></td>
-            <td><%= saved_list.date_saved %></td>
+            <td><%= saved_list.date_saved.strftime("%m-%d-%Y") %></td>
             <td><%= link_to 'Show', saved_list %></td>
             <td><%= link_to 'Delete', saved_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>

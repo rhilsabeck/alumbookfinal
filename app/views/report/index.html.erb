@@ -7,7 +7,7 @@
 
     <!-- Select Dropdown that displays the hidden forms -->
     <%= label_tag(:report_type, 'Report by:') %>
-    <%= select_tag(:report_type, options_for_select([['Choose Report Type', 0], ['Date Entered', 1], ['Graduation Year', 2], ['Graduate Degree Program', 3], ["Employeer Name", 4], ["Survey Taken", 5], ["User Giving Back", 6], ["Survey Results", 7], ["User Survey Results", 8]], 0), :onchange => "onchange_report_type_handler()")%>
+    <%= select_tag(:report_type, options_for_select([['Choose Report Type', 0], ['Date Entered', 1], ['Graduation Year', 2], ['Graduate Degree Program', 3], ["Employeer Name", 4], ["Survey Taken", 5], ["Staying Connected Users", 6], ["Survey Results", 7], ["User Survey Results", 8]], 0), :onchange => "onchange_report_type_handler()")%>
 
     <!-- (1) Date Entered Form -->
     <div id="report_type_form_1" style="display: none;">

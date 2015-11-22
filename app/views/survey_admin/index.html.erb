@@ -34,7 +34,7 @@
         <tr>
           <td><%= survey.status %></td>
           <td><%= survey.survey_name%></td>
-          <td><%= survey.date_created%></td>
+          <td><%= survey.date_created.strftime("%m-%d-%Y")%></td>
           <td><%= id_to_name survey.login_id%></td>
           <% if survey.status == 'unpublished' %>
             <td><%= link_to 'Edit', action: 'edit', :id => survey, :survey_id => survey %></td>

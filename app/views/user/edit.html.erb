@@ -18,8 +18,10 @@
       <h5 align="center"><%= @user.login.full_name %></h5>
       <% if current_login.authorized_to_edit_profile? @user.id %>
         <br/>
-        <h6><b>Giving Back Details</b></h6>
+        <h6><b>Staying Connected Details</b></h6>
         <p> You have <b><%= giving_back_jobs_internships @user.id %></b> approved internships/jobs </p>
+        <h6><b>Surveys</b></h6>
+        <p> You have <b><%= survey_count %></b> survey/s available to take </p>
         <h6><b>Opt In Details</b></h6>
           <b>General:</b> <%= convert_opt_in_to_words(@user.general_opt_in.present? ? @user.general_opt_in : 0) %><br/>
           <b>Email:</b> <%= convert_opt_in_to_words(@user.email_opt_in.present? ? @user.email_opt_in : 0) %>
@@ -110,18 +112,12 @@
           </fieldset>
 
           <fieldset>
-            <legend>Personal Information</legend>
+            <legend>Additional Personal Information</legend>
             <div class="row"> 
               <div class="medium-10 columns">
                   <%= f.label :birth_day, "Birthday" %>
                   <%= f.date_select :birth_day, {order: [:month, :day, :year], include_blank: true, start_year: 1920}, {class: "date-select"}  %>
               </div>
-            </div>
-            <div class="row">
-              <div class="medium-6 columns">
-              <%= f.label :ethnicity %>
-              <%= f.text_field :ethnicity %>
-            </div>
             </div>
         </fieldset>
 
@@ -154,7 +150,7 @@
         <!-- Ryan Hilsabeck added program section below and added status to this tab section  -->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEducationInfo">
           <fieldset>
-          <legend>NCC School Information</legend>
+          <legend>North Central College Graduate Program Information</legend>
           <div class="row">
             <div class="medium-6 columns">
               <div class="medium-6 columns">
@@ -299,6 +295,9 @@
        <!--  Privacy Section -->
         <!--  Ryan Hilsabeck added this info below-->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlPrivacyInfo">
+          <p>Our database was designed to help connect current students and alumni and to help strengthen North Central’s Graduate Community.</p>
+          <p>By opting in, you are joining an elite community of involved, informed, principled and productive citizens, working together to make a positive impact on North Central’s Graduate Programs, and helping create a network to foster professional development and constant learning.</p>
+          <p>You can change your privacy setting at any time.</p>
                 <fieldset>
                   <legend>Opt In?</legend>
                   <div class="row">

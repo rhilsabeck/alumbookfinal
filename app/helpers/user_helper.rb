@@ -10,6 +10,40 @@ module UserHelper
     return count
   end
 
+   #Method to get surveys that user has not taken yet(Create by Ryan Hilsabeck)
+  def survey_count
+    @pub_surveys = Survey.select('id').where(status: 'published')
+    @pub_survey_ids = Array.new
+
+    @pub_surveys.each do |u|
+      @pub_survey_ids.push (u.id)
+    end
+       
+    @user_taken_surveys = UserSurvey.where(user_id: current_login)
+    @user_taken_survey_ids = Array.new
+
+    @user_taken_surveys.each do |u|
+      @user_taken_survey_ids.push (u.survey_id)
+    end
+
+    @untaken_pub_surveys_ids = Array.new
+
+    @pub_survey_ids.each do |u|
+    if @user_taken_survey_ids.index(u)
+      puts "it exists"
+    else
+      @untaken_pub_surveys_ids.push (u)
+    end
+    end
+
+    if @untaken_pub_surveys_ids.empty?
+      count = 0
+    else
+     count = @untaken_pub_surveys_ids.count
+    end
+    return count
+  end
+
   # Ryan Hilsabeck additions from alumbook2. Helper methods for User information 
   # helper method to concatenate the elements of the phone number into
   # a string

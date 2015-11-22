@@ -5,7 +5,7 @@
       <div class="medium-7 columns">
         <% f.object.build_college unless f.object.college %>
         <%= f.fields_for :college do |f_college| %>
-          <%= f_college.label :college_name %>
+          <%= f_college.label :college_name, "College or University" %>
           <%= f_college.text_field :college_name %>
         <% end %>
       </div>

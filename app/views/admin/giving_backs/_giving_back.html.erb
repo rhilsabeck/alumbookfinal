@@ -108,6 +108,9 @@
       <%= mail_to giving_back.contact_email %>
     </p>
     <hr />
-    <h6>Giving Back submitted by <%= id_to_name giving_back.user_id %>
+    <h6>Staying Connected submitted by <%= id_to_name giving_back.user_id %></h6>
+    <% if giving_back.internship? || giving_back.jobs? %>
+      <h6>Archive Date is:  <%= giving_back.archive_on.strftime("%B %d") %></h6>
+    <% end %>
   </div>
 </div>

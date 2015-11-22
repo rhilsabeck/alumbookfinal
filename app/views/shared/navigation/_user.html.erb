@@ -4,7 +4,7 @@
           <li class="name">
             <%= link_to '/' do %>
               <span class="title">North Central College</span>
-              <span class="subtitle">Office of Graduate and Continuing Education</span>
+              <span class="subtitle">Office of Graduate and Continuing Studies</span>
             <% end %>
           </li>
           <li class="toggle-topbar menu-icon">
@@ -21,13 +21,12 @@
       <%= link_to 'Job & Internship Openings', internships_path %>
     </li>
     <li class="has-dropdown <%= 'active' if params[:controller] == 'giving_backs' %>">
-      <a href="#">Give Back</a>
+      <a href="#">Stay Connected</a>
       <ul class="dropdown">
         <li><%= link_to 'Job', new_giving_back_path('jobs') %></li>
         <li><%= link_to 'Internship', new_giving_back_path('internship') %></li>
         <li><%= link_to 'Mentoring', new_giving_back_path('mentoring') %></li>
         <li><%= link_to 'Guest Speaking', new_giving_back_path('guest_speaking') %></li>
-        <li><%= link_to 'Other', new_giving_back_path('other') %></li>
       </ul>
     </li>
     <li class="has-dropdown <%= 'active' if params[:controller] == 'user' %>">

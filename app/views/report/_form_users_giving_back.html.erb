@@ -3,8 +3,8 @@
 <!-- Users Giving Back Form Render -->
 <%= form_tag("/report/show", method:"post", onsubmit:"report_form_reset()") do %>
 
-  <h3>Report by Users Giving Back</h3>
-  <p>Make a list of users who have given back.</p>
+  <h3>Report by Staying Connected Users</h3>
+  <p>Make a list of users who have submitted connections.</p>
 
   <%= label_tag(:saved_list_type, 'Run report on: ') %>
   <%= select_tag(:saved_list_type, (options_from_collection_for_select(SavedList.where("login_id = ?", current_login.id), :id, :list_name)), {:include_blank => 'All Users'}) %>

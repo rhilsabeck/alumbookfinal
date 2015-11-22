@@ -7,9 +7,10 @@
       </div>
       <h5 align="center"><%= @user.login.full_name %></h5>
       <% if current_login.authorized_to_edit_profile? @user.id %>
-        <br/>
-        <h6><b>Giving Back Details</b></h6>
+        <h6><b>Staying Connected Details</b></h6>
         <p> You have <b><%= giving_back_jobs_internships @user.id %></b> approved internships/jobs </p>
+        <h6><b>Surveys</b></h6>
+        <p> You have <b><%= survey_count %></b> survey/s available to take </p>
         <h6><b>Opt In Details</b></h6>
           <b>General:</b> <%= convert_opt_in_to_words(@user.general_opt_in.present? ? @user.general_opt_in : 0) %><br/>
           <b>Email:</b> <%= convert_opt_in_to_words(@user.email_opt_in.present? ? @user.email_opt_in : 0) %>
@@ -76,9 +77,8 @@
                     <% end %>
                   </ul>
                 </p>
-                <p><b>Birth Date:</b> <%= @user.try(:birth_day).strftime("%m-%d-%Y") %></p>
-                <p><b>Ethnicity:</b> <%= @user.try(:ethnicity) %></p>
-                <p><b>Spouse Name:</b> <%= @user.try(:spouse_first_name) %>
+                <p><b>Birth Date:</b> <%= @user.birth_day.present? ? @user.try(:birth_day).strftime("%m-%d-%Y")  : "" %> </p>
+                <p><b>Spouse or Partner Name:</b> <%= @user.try(:spouse_first_name) %>
                                <%= @user.try(:spouse_middle_initial) %>
                                <%= @user.try(:spouse_last_name) %>
                 </p>
@@ -86,9 +86,9 @@
         </section>
     <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEducationInfo">
-                <p><b>NCC Education Status:</b> <%= convert_user_status_to_words(@user.try(:status)) %></p>
-                <p><b>NCC Grad Program:</b> <%= @user.try(:program) %></p>
-                <p><b><ins>Degrees</ins></b>
+                <p><b>North Central College Student Status:</b> <%= convert_user_status_to_words(@user.try(:status)) %></p>
+                <p><b>Grad Program:</b> <%= @user.try(:program) %></p>
+                <p><b><ins>Additional Education Information</ins></b>
                   <ul id="degrees">
                     <% if @user.undergraduate_degrees.all.present? %>
                       <% @user.undergraduate_degrees.all.each do |ud| %>
@@ -96,7 +96,7 @@
                         <%= convert_degree_type(ud.degree.type) %>
                             <%= ud.degree.major_name %> from
                             <%= ud.college.college_name %> in
-                            <%= ud.graduation_date.strftime("%B %Y") %>
+                            <%= ud.graduation_date? ? ud.graduation_date.strftime("%B %Y")  : "" %>
                       </li>
                       <% end %>
                     <% end %>
@@ -106,7 +106,7 @@
                         <%= convert_degree_type(gd.degree.type) %>
                             <%= gd.degree.major_name %> from
                             <%= gd.college.college_name %> in
-                            <%= gd.graduation_date.strftime("%B %Y") %>
+                            <%= gd.graduation_date? ? gd.graduation_date.strftime("%B %Y")  : "" %>
                       </li>
                       <% end %>
                     <% end %>
@@ -117,7 +117,7 @@
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEmploymentInfo">
                 <% if @user.company.present? %>
                 <p>
-                  <b>Company Name:</b><br> 
+                  <b>Employer:</b><br> 
                   <%= @user.try(:company).try(:company_name) %><br><br>
                   <b>Job Title:</b> <br>
                   <%= @user.try(:job_title) %>
@@ -137,7 +137,7 @@
                 </p>
                 <% end %>
                 <p><b>Salary Range:</b> <%= @user.salary_range.present? ? convert_salary_range_to_words(@user.salary_range) : "" %></p>
-                <p><b>Start Date:</b> <%= @user.present? ? @user.start_date.strftime("%m-%d-%Y") : "" %><br>
+                <p><b>Start Date:</b> <%= @user.start_date.present? ? @user.start_date.strftime("%m-%d-%Y") : "" %><br>
                 </p>
         </section>
       </div>

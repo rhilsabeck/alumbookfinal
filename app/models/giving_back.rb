@@ -21,7 +21,11 @@ class GivingBack < ActiveRecord::Base
   accepts_nested_attributes_for :company
 
   def needs_subject?
-    mentoring? || guest_speaking? || other?
+    guest_speaking?  
+  end
+
+  def needs_different_subject?
+    mentoring?
   end
 
   def needs_position?
@@ -43,6 +47,14 @@ class GivingBack < ActiveRecord::Base
   def needs_archive_date?
     internship? || jobs?
   end
+
+  def mentor_changes?
+    mentoring?
+  end
+
+ # def other_changes?
+      #internship? || jobs? || guest_speaking?
+  #end
 
   def contact_full_name
     "#{contact_first_name} #{contact_last_name}"
