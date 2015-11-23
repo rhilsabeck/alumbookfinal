@@ -284,6 +284,7 @@
           <%= f.fields_for :login do |f_login| %>
             <fieldset>
               <legend>Password Reset</legend>
+              <p> Password must be at least 8 characters long </p>
                 <%= f_login.label :New_Password %>
                 <%= f_login.password_field :password, autocomplete: "off" %>
 

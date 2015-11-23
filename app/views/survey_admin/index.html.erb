@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div align="left">
-    <%= link_to 'Create New Survey', {controller: "survey_admin", action: 'new'} %>
+    <%= link_to 'Create New Survey', {controller: "survey_admin", action: 'new'}, :class => "button small" %>
     </div>
   </br>
     <% unless @survey.blank? %>

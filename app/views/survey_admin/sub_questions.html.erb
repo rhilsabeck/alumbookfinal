@@ -26,7 +26,14 @@
   <%= f.hidden_field :display_order, value: count %>
 </p>
 
-  <%= f.submit "Submit", :class => "round button" %> <%=link_to "Done", action: 'edit', :id => @question.survey_id %>
+  <div class="row">
+  <div class="small-3 columns">
+  <%= f.submit "Submit", :class => "button small"%> 
+  </div> 
+  <div class="small-3 columns">   
+  </br><%=link_to "Back to survey",  {action: 'edit', :id => @question.survey_id}, :class => "button small" %>
+</div>
+</div>
 <% end %>
   </div>
   </div>

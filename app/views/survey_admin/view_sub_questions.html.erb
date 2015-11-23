@@ -11,7 +11,7 @@
 
 	<%end%>
 </br>
-  <%=link_to "Back to survey", action: 'edit', :id => @question.survey_id %>
+  <%=link_to "Back to survey", {action: 'edit', :id => @question.survey_id}, :class => "button small" %>
   </div>
   
 </div>

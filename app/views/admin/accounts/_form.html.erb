@@ -45,7 +45,7 @@
       <%= errors @login, :username %>
     </li>
     <li class="<%= error_class @login, :password %>">
-      <%= f.label :password %>
+      <%= f.label :password, "Password(Must be at least 8 characters)"%>
       <%= f.password_field :password, autocomplete: "off" %>
       <%= errors @login, :password %>
     </li>

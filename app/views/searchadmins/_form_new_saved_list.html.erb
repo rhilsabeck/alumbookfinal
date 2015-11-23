@@ -2,7 +2,7 @@
 
 <!-- Save List Button -->
 <div align="center">
-<button type="button" class="round button" onclick="toggle_saved_list_form();">Create or Add to Existing Saved List</button>
+<button type="button" class="button small" onclick="toggle_saved_list_form();">Create or Add to Existing Saved List</button>
 </div>
 <!-- New Saved List Form Render -->
 <div id="saved_list_form" class="noprint" style="display: none;">
@@ -19,7 +19,7 @@
         <%= label_tag "New list name:" %><%= text_field_tag :new_list_name %>
         <%= select_tag :list_name, options_from_collection_for_select(@saved_list_array, 'id', 'list_name'), {:include_blank => '-- Add to Saved List --'} %>
         <div align="center">
-          <%= submit_tag "Save", class: "round button" %>
+          <%= submit_tag "Save", class: "button small" %>
         </div>
       <% end %>
     </div>

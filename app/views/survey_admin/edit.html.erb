@@ -29,29 +29,20 @@
           <td><%= link_to 'Sub Questions', action: 'sub_questions', :id => q.id %> </td>
           <%end%>
          <% end %>
-
-
       </tr>
       <% end %>
-
-
-
-
-
-
           </tr>
 
-    </table><br>
-
-
-
-
-
-
-
-
+    </table>
     <% if @survey.status == 'closed' %>
     <%= link_to "Back to closed surveys", "/survey_admin/closed", :class => "button small" %>
     <% else %>
-    <%= link_to 'New Question', {controller: "survey_admin", action: 'new_q', :id => @survey, :display_order => @count} %>
+    <div class="row">
+    <div class="small-3 columns">
+    <%= link_to 'Add New Question', {controller: "survey_admin", action: 'new_q', :id => @survey, :display_order => @count}, :class => "button small" %>
+    </div>
+    <div class="small-3 columns">
+    <%= link_to "Back to unpublished surveys", "/survey_admin/index", :class => "button small" %>
     <% end %>
+    </div>
+    </div>

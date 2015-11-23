@@ -12,19 +12,18 @@ Using Foundation 5 and Ransack advanced search form-->
     <%= f.condition_fields do |c| %>
       <%= render "condition_fields", f: c %>
     <% end %>
-    
+    </br>
   <!--Button for add condition, association type "or"-->
   <p>
     <div class="row">
         <div class="large-12 small-12 columns">
-            <%= link_to_add_fields "Add Conditions", f, :condition, class: "small round button" %>
+            <%= link_to_add_fields "Add Conditions", f, :condition, class: "button small" %>
         </div>
     </div>
   </p>
-  
   <div class="row">
     <div  align ="center" class="large-12 small-12 columns">
-      <%= f.submit "search", :class => "round button" %>
+      <%= f.submit "search", :class => "button small" %>
     </div>
   </div>
 <% end %>
