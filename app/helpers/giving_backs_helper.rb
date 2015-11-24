@@ -22,7 +22,7 @@ module GivingBacksHelper
   def blurb_for_giving_back_type(type)
     blurbs = {jobs: 'Post jobs relevant to our degree programs and help advance the careers of fellow North Central graduate students and alumni.', 
             internship: "Students in all Graduate Programs can now elect to participate in an internship for course credit. If you know of a possible internship or if your company is looking for graduate-level interns, you can submit an internship what will be available on this site and will be made available to our current graduate students.", 
-            mentoring: "", 
+            mentoring: "Provide your personal and professional insight to other graduate students by serving as their mentor. Please indicate an area in which you'd like to mentor a current graduate student and provide details outlining your background and availability so that we can best match your interest to the interests of our students.", 
             guest_speaking: "With a focus on bringing real-world experience into the classroom, we are constantly searching for guest speakers  and participants for panels, round-tables and seminars.  Please provide a brief explanation of a topic you'd wish to discuss, the format in which you prefer presenting, your availably and any time requirements. Additionally, please provide a brief overview of your professional qualifications.", 
             other: '' }
     blurbs[type.to_sym]

@@ -120,7 +120,7 @@ module UserHelper
   end
 
   # helper method to convert degree_type from number stored in tables
-  # to verbiage
+  # to verbiage(Ryan HIlsabeck added more degrees)
   def convert_degree_type (degree_type_num)
       degree_type_num = "#{degree_type_num}"
     case degree_type_num
@@ -140,6 +140,26 @@ module UserHelper
         convert_degree_text = "Doctoral (Ph.D.)"
       when "md"
         convert_degree_text = "Medical Doctor (M.D.)"
+      when "mph"
+        convert_degree_text = "Master of Public Health (M.P.H)"
+      when "mpa"
+        convert_degree_text = "Master of Public Adminstration (M.P.A)"
+      when "jd"
+        convert_degree_text = "Juris Doctor (J.D)"
+      when "mfa"
+        convert_degree_text = "Master of Fine Arts (M.F.A)"
+      when "mms"
+        convert_degree_text = "Master of Music (M.M.S)"
+      when "me"
+        convert_degree_text = "Master of Engineering (M.E.)"
+      when "mlis"
+        convert_degree_text = "Master of Library Science (M.L.I.S)"
+      when "msw"
+        convert_degree_text = "Master of Social Work (M.S.W)"
+      when "med"
+        convert_degree_text = "Master of Education (M.Ed)"
+      when "mba"
+        convert_degree_text = "Master of Business Administration (M.B.A)"
       else
         convert_degree_text = "Best Degree Ever"
     end

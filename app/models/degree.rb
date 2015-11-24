@@ -11,7 +11,17 @@ class Degree < ActiveRecord::Base
       ma: 'Master of Arts (M.A.)',
       ms: 'Master of Science (M.S.)',
       phd: 'Doctoral (Ph.D.)',
-      md: 'Medical Doctor (M.D.)'
+      md: 'Medical Doctor (M.D.)',
+      mph: 'Master of Public Health (M.P.H)',
+      mpa: 'Master of Public Adminstration (M.P.A)',
+      jd: 'Juris Doctor (J.D)',
+      mfa: 'Master of Fine Arts (M.F.A)',
+      mms: 'Master of Music (M.M.S)',
+      me: 'Master of Engineering (M.E.)',
+      mlis: 'Master of Library Science (M.L.I.S)',
+      msw: 'Master of Social Work (M.S.W)',
+      med: 'Master of Education (M.Ed)',
+      mba: 'Master of Business Administration (M.B.A)',
     }
     humanized_types[type]
   end
@@ -21,7 +31,7 @@ class Degree < ActiveRecord::Base
   end
 
   def self.graduate_types
-    [ :ma, :ms, :phd, :md ]
+    [ :jd, :ma, :mba, :md, :me, :med, :mfa, :mlis, :mms, :mpa, :mph, :ms, :msw, :phd ]
   end
 
   enum type: Degree.undergraduate_types + Degree.graduate_types
