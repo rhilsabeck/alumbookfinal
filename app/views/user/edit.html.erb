@@ -110,40 +110,6 @@
              <%= link_to_add_association 'add phone', f, :user_phones %>
             </div>
           </fieldset>
-
-          <fieldset>
-            <legend>Additional Personal Information</legend>
-            <div class="row"> 
-              <div class="medium-10 columns">
-                  <%= f.label :birth_day, "Birthday" %>
-                  <%= f.date_select :birth_day, {order: [:month, :day, :year], include_blank: true, start_year: 1920}, {class: "date-select"}  %>
-              </div>
-            </div>
-        </fieldset>
-
-
-            <div class="row">
-              <div class="medium-10 columns">
-                <div class="row">
-                  <div class="medium-5 columns">
-                    <%= f.label :spouse_first_name %>
-                    <%= f.text_field :spouse_first_name %>
-                  </div>
-                  <div class="medium-2 columns">
-                    <%= f.label :spouse_middle_initial, 'MI' %>
-                    <%= f.text_field :spouse_middle_initial %>
-                  </div>
-                  <div class="medium-5 columns">
-                    <%= f.label :spouse_last_name %>
-                    <%= f.text_field :spouse_last_name %>
-                  </div>
-                </div>
-              </div>
-              <div class="medium-2 columns">
-                <%= f.label :number_of_children, '# children' %>
-                <%= f.text_field :number_children %>
-              </div>
-            </div>
         </section>
 
         <!-- Education Section  -->
@@ -152,8 +118,8 @@
           <fieldset>
           <legend>North Central College Graduate Program Information</legend>
           <div class="row">
-            <div class="medium-6 columns">
-              <div class="medium-6 columns">
+            <div class="medium-5 columns">
+              <div class="medium-8 columns">
               <div class="row">
               <%= f.label :status %>
               <%= f.select :status, options_for_select([[ 'Currently Enrolled', 1], ['Alumni', 0 ]],
@@ -161,11 +127,11 @@
               </div>
             </div>
             </div>
-            <div class="medium-6 columns">
+            <div class="medium-7 columns">
               <div class="row">
-              <div class="medium-11 columns">
+              <div class="medium-12 columns">
               <%= f.label :program %>
-              <%= f.select :program, options_for_select(["Business Administration","International Business Administration","Education","Leadership Studies","Liberal Studies","Management Information Systems","Web and Internet application"], selected: @user.program), include_blank: true %>
+              <%= f.select :program, options_for_select(["Business Administration","International Business Administration", "Education - Curriculum & Instruction", "Education - Leadership & Administration","Leadership Studies - Higher Education", "Leadership Studies - Professional Leadership", "Leadership Studies - Social Entrepreneurship", "Leadership Studies - Sports Leadership", "Liberal Studies","Management Information Systems","Web and Internet Applications"], selected: @user.program), include_blank: true %>
               </div>
             </div>
             </div>
@@ -223,7 +189,7 @@
             <div class="row">
             <div class="medium-7 columns">
               <%= f.label :start_date %>
-              <%= f.date_select :start_date, {order: [:month, :day, :year], include_blank: true, start_year: 1920}, {class: "date-select"}  %>
+              <%= f.date_select :start_date, {order: [:month, :day, :year], include_blank: true, start_year: Date.today.year, end_year: 1920}, {class: "date-select"}  %>
             </div>
             </div>
          </fieldset>

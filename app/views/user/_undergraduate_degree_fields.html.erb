@@ -19,14 +19,14 @@
         </div>
       <div class="medium-7 columns">
         <%= f_degree.label :type, 'Degree' %>
-        <%= f_degree.select :type, Degree.undergraduate_types.map { |w,| [Degree.humanize_type(w), w] } %>
+        <%= f_degree.select :type, Degree.undergraduate_types.map { |w,| [Degree.humanize_type(w), w] }, include_blank: true %>
         <% end %>
       </div>
       </div>
       <div class="row">
       <div class="medium-12 columns">
         <%= f.label :graduation_date %>
-        <%= f.date_select :graduation_date, {order: [:month, :year],discard_day: true,  include_blank: true, start_year: 1920}, {class: "date-select"}  %>
+        <%= f.date_select :graduation_date, {order: [:month, :year],discard_day: true,  include_blank: true, start_year: Date.today.year + 4, end_year: 1920}, {class: "date-select"}  %>
       </div>
     </div>
   </div>

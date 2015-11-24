@@ -77,12 +77,6 @@
                     <% end %>
                   </ul>
                 </p>
-                <p><b>Birth Date:</b> <%= @user.birth_day.present? ? @user.try(:birth_day).strftime("%m-%d-%Y")  : "" %> </p>
-                <p><b>Spouse or Partner Name:</b> <%= @user.try(:spouse_first_name) %>
-                               <%= @user.try(:spouse_middle_initial) %>
-                               <%= @user.try(:spouse_last_name) %>
-                </p>
-                <p><b>Number of children:</b> <%= @user.try(:number_children) %></p>
         </section>
     <!-- Ryan Hilsabeck User changes(merging some stuff from alumbook 2 to below) -->
         <section role="tabpanel" aria-hidden="true" class="content" id="pnlEducationInfo">

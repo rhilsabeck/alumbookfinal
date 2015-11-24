@@ -42,7 +42,7 @@
     <%= link_to 'Add New Question', {controller: "survey_admin", action: 'new_q', :id => @survey, :display_order => @count}, :class => "button small" %>
     </div>
     <div class="small-3 columns">
-    <%= link_to "Back to unpublished surveys", "/survey_admin/index", :class => "button small" %>
+    <%= link_to "Back to unpublished surveys", survey_admin_index_path, :class => "button small" %>
     <% end %>
     </div>
     </div>
